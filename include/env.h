@@ -46,5 +46,7 @@ char	*dollex(char *str, t_env **env);
 t_env	*new_env(char *n, char *v);
 void	add_back_env(t_env *new_env, t_env **lst);
 int		echo(char **arg);
+int		cd(char **path, t_env **env);
+int		pwd(void);
 
 #endif

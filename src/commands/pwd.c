@@ -28,9 +28,10 @@ int pwd(void)
 	free(ptr);
 	return(0);
 }
-
+/*
 int main(void)
 {
 	pwd();
 	return(0);
 }
+*/

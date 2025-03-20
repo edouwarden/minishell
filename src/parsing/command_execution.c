@@ -18,9 +18,9 @@ void	execute_builtin(char **args, t_env **env)
 	if (!strcmp(args[0], CMD_ECHO))
 		echo(args);
 	else if (!strcmp(args[0], CMD_CD))
-		printf("TODO: Implement cd\n");
+		cd(args, env);
 	else if (!strcmp(args[0], CMD_PWD))
-		printf("TODO: Implement pwd\n");
+		pwd();
 	else if (!strcmp(args[0], CMD_EXPORT))
 		ft_export(args, env);
 	else if (!strcmp(args[0], CMD_UNSET))

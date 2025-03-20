@@ -54,8 +54,6 @@ void set_to_old_pwd(t_env **env, t_env *pwd, int old)
 
 void update_env(t_env **env, t_env *old_pwd, t_env *pwd)
 {
-	char *ptr;
-
 	if (!old_pwd && !pwd)
 		return;
 	else if (pwd && old_pwd)
@@ -89,7 +87,7 @@ int go_to_path(char *path, t_env **env)
 
 int return_to_lobby(t_env **env)
 {
-	char * path;
+	//char * path;
 
 	//path = getenv("HOME");
 	return(go_to_path("~", env));

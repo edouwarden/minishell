@@ -16,9 +16,11 @@ SRCS		=	src/main.c \
 				src/commands/echo.c \
 				src/commands/env.c \
 				src/commands/export.c \
-				src/commands/ft_lstlast.c \
+				utils/ft_lstlast.c \
 				src/commands/unset.c \
-				src/commands/utils.c
+				utils/utils.c \
+				src/commands/cd.c \
+				src/commands/pwd.c 
 
 
 OBJS		=	$(SRCS:.c=.o)
