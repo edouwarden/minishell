@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 12:01:26 by jsarter           #+#    #+#             */
-/*   Updated: 2025/03/21 13:48:27 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/03/21 14:54:08 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	print_env(t_env **lst)
 {
 	t_env	*ptr;
 
-	ptr = *lst;
+	ptr = (*lst)->next;
 	while (ptr)
 	{
 		if (ptr->value)
