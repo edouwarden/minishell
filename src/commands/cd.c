@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:01:34 by jsarter           #+#    #+#             */
-/*   Updated: 2025/03/21 12:06:57 by enormand         ###   ########.fr       */
+/*   Updated: 2025/03/21 16:30:15 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void set_to_old_pwd(t_env **env, t_env *pwd, int old)
 void update_env(t_env **env, t_env *old_pwd, t_env *pwd)
 {
 	if (!old_pwd && !pwd)
-		return;
+		return ;
 	else if (pwd && old_pwd)
 	{
 		old_pwd->value = pwd->value;
@@ -77,20 +77,13 @@ int go_to_path(char *path, t_env **env)
 	if (error == -1)
 	{
 		perror("cd");
+		printf("path= %s\n", path);
 		return(1);
 	}
 	ptr_old = is_in_env(env, ft_strdup("OLDPWD"));
 	ptr = is_in_env(env, ft_strdup("PWD"));
 	update_env(env, ptr_old, ptr);
 	return(0);
-}
-
-int return_to_lobby(t_env **env)
-{
-	//char * path;
-
-	//path = getenv("HOME");
-	return(go_to_path("~", env));
 }
 
 int cd(char **path, t_env **env)
@@ -104,19 +97,22 @@ int cd(char **path, t_env **env)
 		 printf("cd: too many arguments\n");
 		 return (1);
 	}
-	if (!path[1])
+	if (!path[1] || (path[1][0] == '~' && path[1][1] == '\0'))
 	{
-		ptr = is_in_env(env, "HOME");
-		go_to_path(ptr->name, env);
-	}
-	if (path[1][0] == '~' || path[1][1] == '\0')
-	{
-		ptr = is_in_env(env, "HOME");
-		if (!ptr)
-			error = return_to_lobby(env);
+		ptr = is_in_env(env, ft_strdup("HOME"));
+		if (ptr)
+			go_to_path(ptr->value, env);
 		else
-			go_to_path(ptr->name, env);
+			printf("cd: HOME not set\n");
 	}
+	/*else if (path[1][0] == '~' && path[1][1] == '\0')
+	{
+		ptr = is_in_env(env, ft_strdup("HOME"));
+		if (!ptr)
+			error = go_to_path(path[1], env);
+		else
+			go_to_path(ptr->value, env);
+	}*/
 	else
 		error = go_to_path(path[1], env);
 	return (error);
