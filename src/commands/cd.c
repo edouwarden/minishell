@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:01:34 by jsarter           #+#    #+#             */
-/*   Updated: 2025/03/20 17:52:25 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/03/21 12:06:57 by enormand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ int go_to_path(char *path, t_env **env)
 		perror("cd");
 		return(1);
 	}
-	ptr_old = is_in_env(env, "OLDPWD");
-	ptr = is_in_env(env, "PWD");
+	ptr_old = is_in_env(env, ft_strdup("OLDPWD"));
+	ptr = is_in_env(env, ft_strdup("PWD"));
 	update_env(env, ptr_old, ptr);
 	return(0);
 }
