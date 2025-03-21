@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 15:00:33 by jsarter           #+#    #+#             */
-/*   Updated: 2025/03/20 11:52:05 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/03/21 13:26:10 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ t_env	**create_env(void)
 		add_back_env(tmp, list);
 		i++;
 	}
+	tmp = new_env(ft_strdup("LAST_RESULT"), ft_strdup("0"));
+	add_front_env(tmp, list);
 	return (list);
 }
 
