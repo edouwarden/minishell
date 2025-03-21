@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:23:10 by jsarter           #+#    #+#             */
-/*   Updated: 2025/03/21 12:48:04 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/03/21 13:01:12 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	is_stop(char c)
 	if (c == '$')
 		return (0);
 	if (c == '"')
+		return (0);
+	if (c == '\'')
 		return (0);
 	if (c == '\t')
 		return (0);
@@ -76,6 +78,7 @@ char	*is_in_env_bis(char *var, t_env **env)
 	t_env	*ptr;
 
 	final = NULL;
+	//if (var[0] = '?' &&)
 	ptr = *env;
 	while (ptr)
 	{
@@ -136,10 +139,10 @@ char	*dollex(char *str, t_env **env)
 		{
 			with_dollex = search_dollex(with_dollex, i + 1, env);
 			//i--;
-			//printf("i apres search %d\n",i);
 		}
 		i++;
 	}
 	free(str);
+	//printf("i apres search %s\n",with_dollex);
 	return (with_dollex);
 }
