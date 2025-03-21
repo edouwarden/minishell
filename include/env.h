@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:18:57 by jsarter           #+#    #+#             */
-/*   Updated: 2025/03/19 16:25:54 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/03/21 13:49:56 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@ void	add_back_env(t_env *new_env, t_env **lst);
 int		echo(char **arg);
 int		cd(char **path, t_env **env);
 int		pwd(void);
+void	update_last_value(t_env **env, int value);
 
 #endif
