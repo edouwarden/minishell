@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:23:10 by jsarter           #+#    #+#             */
-/*   Updated: 2025/03/19 16:28:39 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/03/21 12:48:04 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,16 +107,16 @@ char	*search_dollex(char *str, int i, t_env **env)
 	return (dollex);
 }
 
-void	quote_management(int *quote, char c)
+void	quote_management(char c, char *str, int *i, int *quote)
 {
-	if (*quote == 1 && c == '\'')
-		*quote = 0;
-	if (*quote == 2 && c == '"')
-		*quote = 0;
-	if (*quote == 0 && c == '\'')
-		*quote = 1;
-	if (*quote == 0 && c == '"')
-		*quote = 2;
+	
+	if (c == '\'' && quote == 0)
+	{
+		while(str[*i] && str[*i] != '\'')
+			*i = *i + 1;
+	}
+	else if (c == '"')
+		*quote = (*quote + 1) % 2;
 }
 
 char	*dollex(char *str, t_env **env)
@@ -131,8 +131,8 @@ char	*dollex(char *str, t_env **env)
 	while (with_dollex[i])
 	{
 		if (with_dollex[i] == '\'' || with_dollex[i] == '"')
-			quote_management(&quote, with_dollex[i]);
-		if (/*(quote == 0 || quote == 2) &&*/ with_dollex[i] == '$')
+			quote_management(with_dollex[i], with_dollex, &i, &quote);
+		if (with_dollex[i] == '$')
 		{
 			with_dollex = search_dollex(with_dollex, i + 1, env);
 			//i--;
@@ -140,5 +140,6 @@ char	*dollex(char *str, t_env **env)
 		}
 		i++;
 	}
+	free(str);
 	return (with_dollex);
 }
