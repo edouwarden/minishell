@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:43:21 by jsarter           #+#    #+#             */
-/*   Updated: 2025/03/20 11:52:15 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/03/21 14:59:55 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,12 @@ int echo(char **arg)
 		i++;
 	if (i == 1) 
 		n = '\n';
-	while (i < c)
+	while (i < c - 1)
 	{
-		printf("%s",arg[i]);
+		printf("%s ",arg[i]);
 		i++;
 	}
+	printf("%s",arg[i]);
 	printf("%c",n);
 	return(0);
 }
