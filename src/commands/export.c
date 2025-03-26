@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 12:22:51 by jsarter           #+#    #+#             */
-/*   Updated: 2025/03/19 15:39:47 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/03/21 15:34:19 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ void	ft_export(char **v, t_env **env)
 			element = is_in_env(env, get_n(v[i]));
 			if (element)
 			{
-				free(element->value);
+				if (element->value)
+					free(element->value);
 				element->value = get_v(v[i]);
 			}
 			else

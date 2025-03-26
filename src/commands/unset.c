@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 12:46:08 by jsarter           #+#    #+#             */
-/*   Updated: 2025/03/19 16:11:54 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/03/21 13:41:56 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_env	*is_in_env(t_env **env, char *name)
 {
 	t_env	*ptr;
 
-	ptr = *env;
+	ptr = (*env)->next;
 	while (ptr)
 	{
 		if (ft_strcmp(ptr->name, name) == 0)
@@ -43,7 +43,7 @@ void	out_of_env(t_env **env, char *name)
 	t_env	*ptr;
 	t_env	*ptr_prev;
 
-	ptr = *env;
+	ptr = (*env)->next;
 	ptr_prev = ptr;
 	ptr = ptr->next;
 	if (ft_strcmp(ptr_prev->name, name) == 0)

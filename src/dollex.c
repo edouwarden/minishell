@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:23:10 by jsarter           #+#    #+#             */
-/*   Updated: 2025/03/21 13:01:12 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/03/21 13:26:27 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,12 @@ char	*is_in_env_bis(char *var, t_env **env)
 	t_env	*ptr;
 
 	final = NULL;
-	//if (var[0] = '?' &&)
+	if (!var || var[0] == 0)
+		return(strdup("$"));
+	if (var[0] == '?')
+	{
+		return((**env).value);
+	}
 	ptr = *env;
 	while (ptr)
 	{
@@ -102,6 +107,11 @@ char	*search_dollex(char *str, int i, t_env **env)
 	{
 		len++;
 		i++;
+	}
+	if (len == 0 && str[i] == '?')
+	{
+		i++;
+		len++;
 	}
 	var = calloc(len + 1, sizeof(char));
 	ft_strncpy(str + i - len, var, len);

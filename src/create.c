@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 15:00:33 by jsarter           #+#    #+#             */
-/*   Updated: 2025/03/20 11:52:05 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/03/26 15:15:30 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,30 @@ void	env_clear(t_env **lst)
 	free(lst);
 }
 
+void handle_shell_level(t_env **env)
+{
+	t_env	*lvl;
+	int		tmp;
+
+	lvl = is_in_env(env, ft_strdup("SHLVL"));
+	if (!lvl)
+	{
+		lvl = new_env(ft_strdup("SHLVL"), ft_strdup("0"));
+		add_back_env(lvl, env);
+		return ;
+	}
+	tmp = ft_atoi(lvl->value);
+	tmp ++;
+	if (tmp >= 1000 || tmp < 0)
+	{
+		if (tmp >= 1000)
+			printf(": warning: shell level (%d) too high, resetting to 1\n", tmp);
+		tmp = 0;
+	}
+	free(lvl->value);
+	lvl->value = ft_itoa(tmp);
+}
+
 t_env	**create_env(void)
 {
 	int		i;
@@ -105,6 +129,9 @@ t_env	**create_env(void)
 		add_back_env(tmp, list);
 		i++;
 	}
+	tmp = new_env(ft_strdup("LAST_RESULT"), ft_strdup("0"));
+	add_front_env(tmp, list);
+	handle_shell_level(list);
 	return (list);
 }
 
