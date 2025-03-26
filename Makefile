@@ -20,7 +20,8 @@ SRCS		=	src/main.c \
 				src/commands/unset.c \
 				utils/utils.c \
 				src/commands/cd.c \
-				src/commands/pwd.c 
+				src/commands/pwd.c \
+				src/parsing/redirection.c
 
 
 OBJS		=	$(SRCS:.c=.o)
@@ -56,5 +57,3 @@ fclean:			clean
 re:				fclean all
 
 .PHONY:			all clean fclean re
-
-

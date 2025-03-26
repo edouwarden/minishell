@@ -25,7 +25,7 @@ char	*read_command_line(void)
 	char	*line;
 
 	// Lit une ligne et l'ajoute à l'historique
-	line = readline("minishell$ ");
+	line = readline("\033[0;32mMinishell>\033[0m ");
 	if (line && *line)
 		add_history(line);
 	return (line);
@@ -39,4 +39,4 @@ void	handle_eof(char *line)
 		printf("exit\n");
 		exit(0);
 	}
-} 
+}

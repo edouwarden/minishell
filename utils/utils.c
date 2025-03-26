@@ -28,13 +28,11 @@ void	ft_strncpy(char *src, char *dest, int n)
 char	*get_n(char *env)
 {
 	int		i;
-	int		len;
 	char	*tmp;
 
 	i = 0;
 	while (env[i] != '=' && env[i])
 		i++;
-	len = ft_strlen(env);
 	tmp = (char *) calloc(sizeof(char), i + 1);
 	if (!tmp)
 		return (NULL);
