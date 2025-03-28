@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/28 17:07:56 by jsarter           #+#    #+#             */
+/*   Updated: 2025/03/28 17:40:59 by jsarter          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
 int ft_isnum(char *str)
@@ -35,8 +47,11 @@ long long get_exit_status(char **args)
     handle_non_numeric_arg_error(args[1]);
     return (2);
   }
-  //TODO: DOMMED BY JUJU
-  //is_overflow(args[1])
+  if (strcmp(args[1], "9223372036854775807") > 0)
+  {
+    handle_exit_error(args[1]);
+    return (255);
+  }
   status = ft_atoi(args[1]);
   if (status < 0)
     return (156);
@@ -46,6 +61,5 @@ long long get_exit_status(char **args)
     handle_exit_error(args[1]);
     return (255);
   }
-  // END OF DOMMED
   return (status);
 }
