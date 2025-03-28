@@ -15,7 +15,7 @@ void	execute_builtin(char **args, t_env **env)
 
 	if (!args || !args[0])
 		return ;
-	
+
 	// Exécute la commande builtin appropriée
 	value = -1;
 	if (!strcmp(args[0], CMD_ECHO))
@@ -31,7 +31,7 @@ void	execute_builtin(char **args, t_env **env)
 	else if (!strcmp(args[0], CMD_ENV))
 		value = print_env(env);
 	else if (!strcmp(args[0], CMD_EXIT))
-		exit(0); //TODO
+    exit(get_exit_status(args));
 	update_last_value(env, value);
-	
+
 }

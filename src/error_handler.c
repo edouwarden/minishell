@@ -98,7 +98,18 @@ void	handle_file_error(void)
 }
 void	handle_exit_error(char *arg)
 {
-	ft_putstr_fd("minishell: exit: ", 2);
-	ft_putstr_fd(arg, 2);
-	ft_putstr_fd(": numeric argument required\n", 2);
+	ft_putstr_fd("minishell: exit: ", STDERR);
+	ft_putstr_fd(arg, STDERR);
+	ft_putstr_fd(": numeric argument required\n", STDERR);
+}
+
+void handle_too_many_args_error(){
+	ft_putstr_fd("minishell: too many arguments\n", STDERR);
+}
+
+void handle_non_numeric_arg_error(char *arg)
+{
+  ft_putstr_fd("minishell: ", STDERR);
+  ft_putstr_fd(arg, STDERR);
+  ft_putstr_fd(": numeric argument required\n", STDERR);
 }
