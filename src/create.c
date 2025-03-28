@@ -80,7 +80,7 @@ void	env_clear(t_env **lst)
 	free(lst);
 }
 
-void handle_shell_level(t_env **env)
+void	handle_shell_level(t_env **env)
 {
 	t_env	*lvl;
 	int		tmp;
@@ -93,11 +93,12 @@ void handle_shell_level(t_env **env)
 		return ;
 	}
 	tmp = ft_atoi(lvl->value);
-	tmp ++;
+	tmp++;
 	if (tmp >= 1000 || tmp < 0)
 	{
 		if (tmp >= 1000)
-			printf(": warning: shell level (%d) too high, resetting to 1\n", tmp);
+			printf(": warning: shell level (%d) too high, resetting to 1\n",
+				tmp);
 		tmp = 0;
 	}
 	free(lvl->value);
@@ -138,46 +139,46 @@ t_env	**create_env(void)
 /*
 int	main(int argc, char **argv)
 {
-	t_env	**test;
-	t_env	*suiv;
-	char *dollex_marex;
-	int		i;
+  t_env	**test;
+  t_env	*suiv;
+  char	*dollex_marex;
+  int		i;
 
-	test = create_env();
-	if (!test)
-		return (0);
-	printf("%p\n", test);
+  test = create_env();
+  if (!test)
+	return (0);
+  printf("%p\n", test);
+  print_env(test);
+  i = 1;
+  if (argc >= 2)
+  {
+	while(i < argc)
+	{
+		if (i != 2 )
+		{
+		dollex_marex = dollex(argv[i], test);
+		printf("avant : %s\napres : %s\n",argv[i], dollex_marex);
+		argv[i] = dollex_marex;
+		}
+		i++;
+	}
+	ft_export(argv, test);
+	print_env(test);
+	if (argc >= 3)
+		ft_unset(argv + 1, test);
+	printf("\n\n  unset\n\n\n");
 	print_env(test);
 	i = 1;
-	if (argc >= 2)
+	while(i < argc)
 	{
-		while(i < argc)
+		if (i != 2 )
 		{
-			if (i != 2 )
-			{
-				dollex_marex = dollex(argv[i], test);
-				printf("avant : %s\napres : %s\n",argv[i], dollex_marex);
-				argv[i] = dollex_marex;
-			}
-			i++;
+		free(argv[i]);
 		}
-		ft_export(argv, test);
-		print_env(test);
-		if (argc >= 3)
-			ft_unset(argv + 1, test);
-		printf("\n\n  unset\n\n\n");
-		print_env(test);
-		i = 1;
-		while(i < argc)
-		{
-			if (i != 2 )
-			{
-				free(argv[i]);
-			}
-			i++;
-		}
-		env_clear(test);
+		i++;
 	}
-	return (0);
+	env_clear(test);
+  }
+  return (0);
 }
 */

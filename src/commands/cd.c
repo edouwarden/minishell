@@ -13,22 +13,22 @@
 #include "../../include/env.h"
 #include "../../include/minishell.h"
 
-void    add_to_bis(t_env **env, char *n ,char *v)
+void	add_to_bis(t_env **env, char *n, char *v)
 {
-    t_env   *tmp;
+	t_env	*tmp;
 
-    tmp = new_env(n, v);
-    if (!tmp)
-    {   
-        printf("export: Memory allocation failed to add : `%s=%s'", n, v);
-        return ;
-    }   
-    add_back_env(tmp, env);
+	tmp = new_env(n, v);
+	if (!tmp)
+	{
+		printf("export: Memory allocation failed to add : `%s=%s'", n, v);
+		return ;
+	}
+	add_back_env(tmp, env);
 }
 
-void set_to_old_pwd(t_env **env, t_env *pwd, int old)
+void	set_to_old_pwd(t_env **env, t_env *pwd, int old)
 {
-	char *ptr;
+	char	*ptr;
 
 	if (old)
 	{
@@ -41,7 +41,7 @@ void set_to_old_pwd(t_env **env, t_env *pwd, int old)
 		ptr[5] = 'D';
 		add_to_bis(env, ptr, ft_strdup(pwd->value));
 	}
-	else 
+	else
 	{
 		ptr = ft_calloc(4, sizeof(char));
 		ptr[0] = 'P';
@@ -52,7 +52,7 @@ void set_to_old_pwd(t_env **env, t_env *pwd, int old)
 	return ;
 }
 
-void update_env(t_env **env, t_env *old_pwd, t_env *pwd)
+void	update_env(t_env **env, t_env *old_pwd, t_env *pwd)
 {
 	if (!old_pwd && !pwd)
 		return ;
@@ -63,40 +63,40 @@ void update_env(t_env **env, t_env *old_pwd, t_env *pwd)
 		return ;
 	}
 	else if (pwd && !old_pwd)
-		return(set_to_old_pwd(env, pwd, 1));
+		return (set_to_old_pwd(env, pwd, 1));
 	else if (!pwd && old_pwd)
-		return(set_to_old_pwd(env, NULL, 0));
+		return (set_to_old_pwd(env, NULL, 0));
 }
 
-int go_to_path(char *path, t_env **env)
+int	go_to_path(char *path, t_env **env)
 {
-	int error;
-	t_env *ptr;
-	t_env *ptr_old;
+	int		error;
+	t_env	*ptr;
+	t_env	*ptr_old;
 
 	error = chdir(path);
 	if (error == -1)
 	{
 		perror("cd");
 		printf("path= %s\n", path);
-		return(1);
+		return (1);
 	}
 	ptr_old = is_in_env(env, ft_strdup("OLDPWD"));
 	ptr = is_in_env(env, ft_strdup("PWD"));
 	update_env(env, ptr_old, ptr);
-	return(0);
+	return (0);
 }
 
-int cd(char **path, t_env **env)
+int	cd(char **path, t_env **env)
 {
-	int	error;
-	t_env *ptr;
+	int		error;
+	t_env	*ptr;
 
 	error = get_c(path);
 	if (error > 2)
 	{
-		 printf("cd: too many arguments\n");
-		 return (1);
+		printf("cd: too many arguments\n");
+		return (1);
 	}
 	if (!path[1] || (path[1][0] == '~' && path[1][1] == '\0'))
 	{

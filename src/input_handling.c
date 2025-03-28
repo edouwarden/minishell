@@ -1,7 +1,7 @@
 #include "../include/minishell.h"
 
 // Variable globale pour le dernier signal reçu
-static char *g_last_signal = NULL;
+static char	*g_last_signal = NULL;
 
 void	handle_sigint(int sig)
 {

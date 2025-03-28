@@ -69,24 +69,36 @@ void	free_pipeline(t_pipeline *pipeline)
 void	handle_memory_error(void)
 {
 	// Erreur d'allocation mémoire fatale
-	ft_putstr_fd("\033[0;31m✖minishell: memory allocation error\033[0m\n", STDERR);
+	ft_putstr_fd("\033[0;31m❌ minishell: memory allocation error\033[0m\n",
+		STDERR);
 	exit(EXIT_FAILURE);
 }
 
 void	handle_command_error(char *cmd)
 {
 	// Affiche erreur commande non trouvée
-	ft_putstr_fd("\033[0;31m✖minishell: ", STDERR);
+	ft_putstr_fd("\033[0;31m❌ minishell: ", STDERR);
 	ft_putstr_fd(cmd, STDERR);
 	ft_putstr_fd(": command not found\033[0m\n", STDERR);
 }
 void	handle_parse_error(char *c)
 {
-	ft_putstr_fd("\033[0;31m✖minishell: parse error near `", STDERR);
-  ft_putstr_fd(c, STDERR);
-  ft_putstr_fd("'\033[0m\n", STDERR);
+	ft_putstr_fd("\033[0;31m❌ minishell: parse error near `", STDERR);
+	ft_putstr_fd(c, STDERR);
+	ft_putstr_fd("'\033[0m\n", STDERR);
 }
-void	handle_file_error()
+void	handle_newline_error(void)
 {
-	ft_putstr_fd("\033[0;31m✖minishell: file error\033[0m\n", STDERR);
+	ft_putstr_fd("\033[0;31m❌ minishell: parse error near newline\033[0m\n",
+		STDERR);
+}
+void	handle_file_error(void)
+{
+	ft_putstr_fd("\033[0;31m❌ minishell: file error\033[0m\n", STDERR);
+}
+void	handle_exit_error(char *arg)
+{
+	ft_putstr_fd("minishell: exit: ", 2);
+	ft_putstr_fd(arg, 2);
+	ft_putstr_fd(": numeric argument required\n", 2);
 }

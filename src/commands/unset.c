@@ -47,7 +47,7 @@ void	out_of_env(t_env **env, char *name)
 	ptr_prev = ptr;
 	ptr = ptr->next;
 	if (ft_strcmp(ptr_prev->name, name) == 0)
-	{	
+	{
 		*env = ptr;
 		del_one_env(ptr_prev);
 	}
@@ -66,8 +66,8 @@ void	out_of_env(t_env **env, char *name)
 
 void	ft_unset(char **v, t_env **env)
 {
-	int		c;
-	int		i;
+	int	c;
+	int	i;
 
 	c = get_c(v);
 	if (c == 0)

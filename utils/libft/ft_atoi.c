@@ -24,11 +24,11 @@ int	ft_contain_any(char *str, char c)
 	return (0);
 }
 
-int	ft_atoi(char *str)
+long long	ft_atoi(char *str)
 {
-	int	i;
-	int	res;
-	int	minus;
+	int			i;
+	long long	res;
+	int			minus;
 
 	i = 0;
 	res = 0;

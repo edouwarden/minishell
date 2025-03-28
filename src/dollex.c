@@ -63,7 +63,7 @@ char	*add_final(int i, int len_name, char *str, char *value)
 		j++;
 	}
 	while (str[i])
-	{	
+	{
 		resu[j] = str[i];
 		j++;
 		i++;
@@ -79,10 +79,10 @@ char	*is_in_env_bis(char *var, t_env **env)
 
 	final = NULL;
 	if (!var || var[0] == 0)
-		return(strdup("$"));
+		return (strdup("$"));
 	if (var[0] == '?')
 	{
-		return((**env).value);
+		return ((**env).value);
 	}
 	ptr = *env;
 	while (ptr)
@@ -122,10 +122,9 @@ char	*search_dollex(char *str, int i, t_env **env)
 
 void	quote_management(char c, char *str, int *i, int *quote)
 {
-	
 	if (c == '\'' && quote == 0)
 	{
-		while(str[*i] && str[*i] != '\'')
+		while (str[*i] && str[*i] != '\'')
 			*i = *i + 1;
 	}
 	else if (c == '"')
@@ -148,11 +147,11 @@ char	*dollex(char *str, t_env **env)
 		if (with_dollex[i] == '$')
 		{
 			with_dollex = search_dollex(with_dollex, i + 1, env);
-			//i--;
+			// i--;
 		}
 		i++;
 	}
 	free(str);
-	//printf("i apres search %s\n",with_dollex);
+	// printf("i apres search %s\n",with_dollex);
 	return (with_dollex);
 }

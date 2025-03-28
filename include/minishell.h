@@ -13,17 +13,18 @@
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <signal.h>
-#include <string.h>
-#include <sys/wait.h>
-#include <fcntl.h>
 #include "../utils/libft/libft.h"
 #include "env.h"
+#include <errno.h>
+#include <fcntl.h>
+#include <readline/history.h>
+#include <readline/readline.h>
+#include <signal.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
 #define STDIN 0
 #define STDOUT 1
@@ -87,6 +88,8 @@ void free_array(char **arr);
 void handle_memory_error(void);
 void handle_command_error(char *cmd);
 void handle_parse_error(char *c);
+void handle_exit_error(char *arg);
+void handle_newline_error(void);
 void free_commands(t_command **commands, int count);
 void free_pipeline(t_pipeline *pipeline);
 
@@ -96,7 +99,7 @@ t_command *create_command(char **args);
 
 /* Command execution */
 int is_builtin(char *cmd);
-void execute_builtin(char **args, t_env **env);
+int execute_builtin(char **args, t_env **env);
 int execute_pipeline(t_pipeline *pipeline);
 
 /* Path handling */
@@ -109,5 +112,6 @@ int handle_input_redirection(t_command *cmd);
 int handle_output_redirection(t_command *cmd);
 int handle_heredoc(t_command *cmd);
 void cleanup_redirections(t_command *cmd);
+long long get_exit_status(char **args);
 
 #endif

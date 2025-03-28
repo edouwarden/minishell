@@ -13,9 +13,9 @@
 #include "../../include/env.h"
 #include "../../include/minishell.h"
 
-void update_last_value(t_env **env, int value)
+void	update_last_value(t_env **env, int value)
 {
-	char *str_value;
+	char	*str_value;
 
 	str_value = ft_itoa(value);
 	free((*env)->value);

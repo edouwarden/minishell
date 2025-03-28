@@ -21,7 +21,8 @@ SRCS		=	src/main.c \
 				utils/utils.c \
 				src/commands/cd.c \
 				src/commands/pwd.c \
-				src/parsing/redirection.c
+				src/parsing/redirection.c \
+				src/commands/exit.c
 
 
 OBJS		=	$(SRCS:.c=.o)

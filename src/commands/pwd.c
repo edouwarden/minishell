@@ -13,7 +13,7 @@
 #include "../../include/env.h"
 #include "../../include/minishell.h"
 
-int pwd(void)
+int	pwd(void)
 {
 	char	*ptr;
 
@@ -26,10 +26,10 @@ int pwd(void)
 	}
 	printf("%s\n", ptr);
 	free(ptr);
-	return(0);
+	return (0);
 }
 /*
-int main(void)
+int	main(void)
 {
 	pwd();
 	return(0);
