@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 12:22:51 by jsarter           #+#    #+#             */
-/*   Updated: 2025/03/21 15:34:19 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/03/28 13:21:50 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,19 @@
 int	is_egal(char *str)
 {
 	int	i;
-
-	if (str[0] == '=')
+	
+	if (ft_isalpha(str[0]) != 1)
 		return (-1);
 	i = 1;
 	while (str[i])
 	{
-		if (str[i] == '=')
-			return (i);
+		if (ft_isalnum(str[i]) == 0)
+		{
+			if (str[i] != '_' && str[i] != '=')
+				return (-1);
+		}
+		//if (str[i] == '=')
+		//	return (i);
 		i++;
 	}
 	return (0);
@@ -35,10 +40,7 @@ void	add_to(t_env **env, char *var)
 
 	tmp = new_env(get_n(var), get_v(var));
 	if (!tmp)
-	{
-		printf("export: Memory allocation failed to add : `%s'", var);
 		return ;
-	}
 	add_back_env(tmp, env);
 }
 
@@ -67,9 +69,12 @@ void	ft_export(char **v, t_env **env)
 	{
 		error_management = is_egal(v[i]);
 		if (error_management == -1)
-			printf("export: `%s': not a valid identifier\n", v[i]);
-		else
-		{
+			return ;
+		i++;
+	}
+	i = 1;
+	while (i < c)
+	{
 			element = is_in_env(env, get_n(v[i]));
 			if (element)
 			{
@@ -79,7 +84,6 @@ void	ft_export(char **v, t_env **env)
 			}
 			else
 				add_to(env, v[i]);
-		}
 		i++;
 	}
 }
