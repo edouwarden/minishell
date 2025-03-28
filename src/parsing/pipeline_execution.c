@@ -191,7 +191,7 @@ static void execute_piped_command(t_command *cmd, t_env **envp)
   // Handle built-in commands
   if (is_builtin(cmd->args[0]))
   {
-    status = execute_builtin(cmd->args, envp);
+    execute_builtin(cmd->args, envp);
     cleanup_redirections(cmd);
     exit(status);
   }
@@ -222,7 +222,7 @@ static void execute_piped_command(t_command *cmd, t_env **envp)
   }
 }
 
-int execute_pipeline(t_pipeline *pipeline)
+void execute_pipeline(t_pipeline *pipeline)
 {
   int cmd_index;
   pid_t *child_pids;
@@ -236,7 +236,8 @@ int execute_pipeline(t_pipeline *pipeline)
     if (handle_heredoc(pipeline->commands[0]) == -1 || handle_input_redirection(pipeline->commands[0]) == -1 || handle_output_redirection(pipeline->commands[0]) == -1)
     {
       cleanup_redirections(pipeline->commands[0]);
-      return (1);
+      update_last_value(pipeline->env, 1);// TODO: set 1 as ERROR
+      return;
     }
 
     // Save original file descriptors
@@ -250,7 +251,7 @@ int execute_pipeline(t_pipeline *pipeline)
       dup2(pipeline->commands[0]->output_fd, STDOUT);
 
     // Execute the builtin
-    status = execute_builtin(pipeline->commands[0]->args, pipeline->env);
+    execute_builtin(pipeline->commands[0]->args, pipeline->env);
 
     // Restore original file descriptors
     dup2(saved_stdin, STDIN);
@@ -260,7 +261,8 @@ int execute_pipeline(t_pipeline *pipeline)
 
     // Cleanup
     cleanup_redirections(pipeline->commands[0]);
-    return (status);
+    //TODO: update_last_value(pipeline->env, 0);// TODO: set 1 as ERROR
+    return;
   }
 
   // Préparation des pipes pour la communication entre les commandes
@@ -281,7 +283,8 @@ int execute_pipeline(t_pipeline *pipeline)
     {
       perror("fork: Erreur lors de la création du processus");
       free(child_pids);
-      return (1);
+      update_last_value(pipeline->env, 1);// TODO: set 1 as ERROR
+      return;
     }
 
     if (child_pids[cmd_index] == 0) // Processus enfant
@@ -329,12 +332,12 @@ int execute_pipeline(t_pipeline *pipeline)
         last_command_status = WEXITSTATUS(status);
       else if (WIFSIGNALED(status))
         last_command_status = 128 + WTERMSIG(status);
-      printf("\nstatus: %d\n",last_command_status);
-      // TODO: update env status
+      update_last_value(pipeline->env, last_command_status);
     }
     cmd_index--;
   }
 
   free(child_pids);
-  return (last_command_status);
+  update_last_value(pipeline->env, last_command_status);// TODO: set 1 as ERROR
+  return;
 }

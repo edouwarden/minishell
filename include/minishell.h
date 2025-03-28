@@ -99,8 +99,8 @@ t_command *create_command(char **args);
 
 /* Command execution */
 int is_builtin(char *cmd);
-int execute_builtin(char **args, t_env **env);
-int execute_pipeline(t_pipeline *pipeline);
+void execute_builtin(char **args, t_env **env);
+void execute_pipeline(t_pipeline *pipeline);
 
 /* Path handling */
 char *find_command_path(char *cmd, char **env);
