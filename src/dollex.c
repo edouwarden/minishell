@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:23:10 by jsarter           #+#    #+#             */
-/*   Updated: 2025/03/21 13:26:27 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/03/28 13:13:13 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,10 +121,10 @@ char	*search_dollex(char *str, int i, t_env **env)
 }
 
 void	quote_management(char c, char *str, int *i, int *quote)
-{
-	
-	if (c == '\'' && quote == 0)
+{	
+	if (c == '\'' && *quote == 0)
 	{
+		*i = *i + 1;
 		while(str[*i] && str[*i] != '\'')
 			*i = *i + 1;
 	}
@@ -145,7 +145,7 @@ char	*dollex(char *str, t_env **env)
 	{
 		if (with_dollex[i] == '\'' || with_dollex[i] == '"')
 			quote_management(with_dollex[i], with_dollex, &i, &quote);
-		if (with_dollex[i] == '$')
+		else if (with_dollex[i] == '$')
 		{
 			with_dollex = search_dollex(with_dollex, i + 1, env);
 			//i--;

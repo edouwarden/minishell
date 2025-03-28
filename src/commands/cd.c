@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:01:34 by jsarter           #+#    #+#             */
-/*   Updated: 2025/03/21 16:39:34 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/03/26 15:47:15 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void update_env(t_env **env, t_env *old_pwd, t_env *pwd)
 	else if (pwd && old_pwd)
 	{
 		free(old_pwd->value);
-		old_pwd->value = pwd->value;
+		old_pwd->value = ft_strdup(pwd->value);
 		return ;
 	}
 	else if (pwd && !old_pwd)
