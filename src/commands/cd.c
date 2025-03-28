@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:01:34 by jsarter           #+#    #+#             */
-/*   Updated: 2025/03/28 15:21:19 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/03/28 15:58:51 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ int go_to_path(char *path, t_env **env)
 	if (error == -1)
 	{
 		perror("cd");
-		printf("path= %s\n", path);
 		return(1);
 	}
 	ptr_old = is_in_env(env, ft_strdup("OLDPWD"));
