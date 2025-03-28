@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 12:22:51 by jsarter           #+#    #+#             */
-/*   Updated: 2025/03/28 13:21:50 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/03/28 15:11:20 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	get_c(char **v)
 	return (i);
 }
 
-void	ft_export(char **v, t_env **env)
+int	ft_export(char **v, t_env **env)
 {
 	int		c;
 	int		i;
@@ -69,7 +69,7 @@ void	ft_export(char **v, t_env **env)
 	{
 		error_management = is_egal(v[i]);
 		if (error_management == -1)
-			return ;
+			return (1);
 		i++;
 	}
 	i = 1;
@@ -86,4 +86,5 @@ void	ft_export(char **v, t_env **env)
 				add_to(env, v[i]);
 		i++;
 	}
+	return (0);
 }

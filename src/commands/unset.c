@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 12:46:08 by jsarter           #+#    #+#             */
-/*   Updated: 2025/03/21 13:41:56 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/03/28 15:13:29 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	out_of_env(t_env **env, char *name)
 	ptr_prev = ptr;
 	ptr = ptr->next;
 	if (ft_strcmp(ptr_prev->name, name) == 0)
-	{
+	{	
 		*env = ptr;
 		del_one_env(ptr_prev);
 	}
@@ -64,10 +64,10 @@ void	out_of_env(t_env **env, char *name)
 	}
 }
 
-void	ft_unset(char **v, t_env **env)
+int	ft_unset(char **v, t_env **env)
 {
-	int	c;
-	int	i;
+	int		c;
+	int		i;
 
 	c = get_c(v);
 	if (c == 0)
@@ -78,4 +78,5 @@ void	ft_unset(char **v, t_env **env)
 		out_of_env(env, v[i]);
 		i++;
 	}
+	return (0);
 }
