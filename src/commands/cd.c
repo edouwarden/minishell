@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:01:34 by jsarter           #+#    #+#             */
-/*   Updated: 2025/03/28 15:58:51 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/03/31 13:38:54 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void set_to_old_pwd(t_env **env, t_env *pwd, int old)
 	if (old)
 	{
 		ptr = ft_calloc(7, sizeof(char));
+		if (!ptr)
+			return ;
 		ptr[0] = 'O';
 		ptr[1] = 'L';
 		ptr[2] = 'D';
@@ -37,26 +39,29 @@ void set_to_old_pwd(t_env **env, t_env *pwd, int old)
 		ptr[4] = 'W';
 		ptr[5] = 'D';
 		add_to_bis(env, ptr, ft_strdup(pwd->value));
+		pwd->value = getcwd(NULL, 0);
 	}
 	else 
 	{
 		ptr = ft_calloc(4, sizeof(char));
+		if (!ptr)
+			return ;
 		ptr[0] = 'P';
 		ptr[1] = 'W';
 		ptr[2] = 'D';
-		add_to_bis(env, ptr, getcwd(ptr, 0));
+		add_to_bis(env, ptr, getcwd(NULL, 0));
 	}
 	return ;
 }
 
 void update_env(t_env **env, t_env *old_pwd, t_env *pwd)
 {
-	if (!old_pwd && !pwd)
+	if ((!old_pwd && !pwd))
 		return ;
 	else if (pwd && old_pwd)
 	{
-		free(old_pwd->value);
-		old_pwd->value = ft_strdup(pwd->value);
+		old_pwd->value = pwd->value;
+		pwd->value = getcwd(NULL, 0);
 		return ;
 	}
 	else if (pwd && !old_pwd)
@@ -71,6 +76,8 @@ int go_to_path(char *path, t_env **env)
 	t_env *ptr;
 	t_env *ptr_old;
 
+	ptr_old = is_in_env(env, ft_strdup("OLDPWD"));
+	ptr = is_in_env(env, ft_strdup("PWD"));
 	error = chdir(path);
 	if (error == -1)
 	{

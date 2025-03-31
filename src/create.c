@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 15:00:33 by jsarter           #+#    #+#             */
-/*   Updated: 2025/03/26 15:15:30 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/03/31 13:12:47 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	handle_shell_level(t_env **env)
 	lvl = is_in_env(env, ft_strdup("SHLVL"));
 	if (!lvl)
 	{
-		lvl = new_env(ft_strdup("SHLVL"), ft_strdup("0"));
+		lvl = new_env(ft_strdup("SHLVL"), ft_strdup("1"));
 		add_back_env(lvl, env);
 		return ;
 	}
@@ -99,10 +99,26 @@ void	handle_shell_level(t_env **env)
 		if (tmp >= 1000)
 			printf(": warning: shell level (%d) too high, resetting to 1\n",
 				tmp);
-		tmp = 0;
+		tmp = 1;
 	}
 	free(lvl->value);
 	lvl->value = ft_itoa(tmp);
+}
+
+t_env **remember_no_env(t_env **env)
+{	
+	t_env	*tmp;
+	char	*ptr;
+
+	ptr = ft_calloc(4, sizeof(char));
+	ptr[0] = 'P';
+	ptr[1] = 'W';
+	ptr[2] = 'D';
+	add_to_bis(env, ptr, getcwd(NULL, 0));
+	tmp = new_env(ft_strdup("LAST_RESULT"), ft_strdup("0"));
+	add_front_env(tmp, env);
+	handle_shell_level(env);
+	return (env);
 }
 
 t_env	**create_env(void)
@@ -116,6 +132,8 @@ t_env	**create_env(void)
 	if (!list)
 		return (NULL);
 	envp = __environ;
+	if (!envp[0])
+		return (remember_no_env(list));
 	tmp = new_env(get_n(envp[0]), get_v(envp[0]));
 	add_back_env(tmp, list);
 	i = 1;
@@ -135,50 +153,3 @@ t_env	**create_env(void)
 	handle_shell_level(list);
 	return (list);
 }
-
-/*
-int	main(int argc, char **argv)
-{
-  t_env	**test;
-  t_env	*suiv;
-  char	*dollex_marex;
-  int		i;
-
-  test = create_env();
-  if (!test)
-	return (0);
-  printf("%p\n", test);
-  print_env(test);
-  i = 1;
-  if (argc >= 2)
-  {
-	while(i < argc)
-	{
-		if (i != 2 )
-		{
-		dollex_marex = dollex(argv[i], test);
-		printf("avant : %s\napres : %s\n",argv[i], dollex_marex);
-		argv[i] = dollex_marex;
-		}
-		i++;
-	}
-	ft_export(argv, test);
-	print_env(test);
-	if (argc >= 3)
-		ft_unset(argv + 1, test);
-	printf("\n\n  unset\n\n\n");
-	print_env(test);
-	i = 1;
-	while(i < argc)
-	{
-		if (i != 2 )
-		{
-		free(argv[i]);
-		}
-		i++;
-	}
-	env_clear(test);
-  }
-  return (0);
-}
-*/
