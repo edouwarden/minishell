@@ -80,7 +80,7 @@ typedef struct s_pipeline
 /* Signal and input handling */
 void setup_signals(void);
 void handle_sigint(int sig);
-char *read_command_line(void);
+char *read_command_line(t_env **env);
 void handle_eof(char *line);
 
 /* Error handling and memory management */

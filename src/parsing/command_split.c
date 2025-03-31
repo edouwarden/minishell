@@ -41,6 +41,7 @@ static char **split_args(char *cmd, int start, int end)
     }
     if (current_quote)
     {
+      printf("\033[0;33m⚠️  Quote not closed\033[0m\n");
       free_array(args);
       return (NULL);
     }
@@ -140,13 +141,18 @@ static int handle_redirection_token(t_command *cmd, char **args, int *i)
     handle_parse_error(error_str);
     return (1);
   }
-  // Remove redirection token and its argument from args array
-  free(args[*i]);
-  free(args[*i + 1]);
-  args[*i] = NULL;
-  args[*i + 1] = NULL;
-  *i += 1;
   return (has_error);
+}
+
+static int is_redirection_token(char *token)
+{
+  while (*token)
+  {
+    if (*token != '<' && *token != '>')
+      return (0);
+    token++;
+  }
+  return (1);
 }
 
 static char **process_redirections(t_command *cmd, char **args)
@@ -156,31 +162,65 @@ static char **process_redirections(t_command *cmd, char **args)
   int j;
   int count;
 
+  // First count how many non-redirection arguments we have
   i = 0;
   count = 0;
   while (args[i])
   {
-    if (args[i] && (strcmp(args[i], REDIR_IN) == 0 || strcmp(args[i], REDIR_OUT) == 0 || strcmp(args[i], REDIR_HEREDOC) == 0 || strcmp(args[i], REDIR_APPEND) == 0))
+    if (!is_redirection_token(args[i]))
     {
-      handle_redirection_token(cmd, args, &i);
-    }
-    else if (args[i])
       count++;
+    }
+    else
+    {
+      // Handle the redirection but don't free the arguments yet
+      int error = handle_redirection_token(cmd, args, &i);
+      if (error)
+        return (NULL);
+      i++; // Skip the argument of redirection
+      continue;
+    }
     i++;
   }
+
+  // Allocate new array for the filtered arguments
   new_args = ft_calloc(count + 1, sizeof(char *));
   if (!new_args)
     return (NULL);
+
+  // Copy non-redirection arguments to new array
   i = 0;
   j = 0;
   while (args[i])
   {
-    if (args[i])
-      new_args[j++] = args[i];
+    if (args[i] && !is_redirection_token(args[i]))
+    {
+      new_args[j++] = ft_strdup(args[i]);
+      if (!new_args[j - 1])
+      {
+        while (--j >= 0)
+          free(new_args[j]);
+        free(new_args);
+        return (NULL);
+      }
+    }
+    else if (args[i])
+    {
+      i++; // Skip redirection argument
+    }
     i++;
   }
   new_args[j] = NULL;
+
+  // Now free the original args array and its contents
+  i = 0;
+  while (args[i])
+  {
+    free(args[i]);
+    i++;
+  }
   free(args);
+
   return (new_args);
 }
 
@@ -224,6 +264,14 @@ t_pipeline *split_command(char *cmd)
     {
       // Parse les arguments de la commande actuelle
       current_args = split_args(cmd, cmd_start, cmd[current_pos + 1] == '\0' ? current_pos + 1 : current_pos);
+      /* Debug
+       int i = 0;
+      while (current_args[i])
+      {
+        printf("\033[0;33m%s\033[0m\n", current_args[i]);
+        i++;
+      }
+      */
       if (!current_args)
       {
         free_pipeline(pipeline);

@@ -124,6 +124,9 @@ static void execute_piped_command(t_command *cmd, t_env **envp)
   int status;
 
   status = 0;
+  // Reset signal handlers for child process
+  signal(SIGINT, SIG_DFL);
+  signal(SIGQUIT, SIG_DFL);
   // Handle heredoc if needed
   if (cmd->heredoc_delim && handle_heredoc(cmd) == -1)
   {
@@ -203,13 +206,40 @@ static void execute_piped_command(t_command *cmd, t_env **envp)
     cleanup_redirections(cmd);
     exit(EXIT_FAILURE);
   }
-  command_path = find_command_path(cmd->args[0], env);
-  if (!command_path)
+  // Check permissions first if it's an absolute or relative path
+  if (cmd->args[0][0] == '/' || cmd->args[0][0] == '.')
   {
-    handle_command_error(cmd->args[0]);
-    free_array(env);
-    cleanup_redirections(cmd);
-    exit(127); // Command not found exit code
+    if (access(cmd->args[0], F_OK) == 0)
+    {
+      if (access(cmd->args[0], X_OK) == -1)
+      {
+        ft_putstr_fd("minishell: ", STDERR);
+        ft_putstr_fd(cmd->args[0], STDERR);
+        ft_putstr_fd(": Permission denied\n", STDERR);
+        free_array(env);
+        cleanup_redirections(cmd);
+        exit(126); // Permission denied exit code
+      }
+      command_path = ft_strdup(cmd->args[0]);
+    }
+    else
+    {
+      handle_command_error(cmd->args[0]);
+      free_array(env);
+      cleanup_redirections(cmd);
+      exit(127); // Command not found exit code
+    }
+  }
+  else
+  {
+    command_path = find_command_path(cmd->args[0], env);
+    if (!command_path)
+    {
+      handle_command_error(cmd->args[0]);
+      free_array(env);
+      cleanup_redirections(cmd);
+      exit(127); // Command not found exit code
+    }
   }
   status = execve(command_path, cmd->args, env);
   if (status == -1)
@@ -236,7 +266,7 @@ void execute_pipeline(t_pipeline *pipeline)
     if (handle_heredoc(pipeline->commands[0]) == -1 || handle_input_redirection(pipeline->commands[0]) == -1 || handle_output_redirection(pipeline->commands[0]) == -1)
     {
       cleanup_redirections(pipeline->commands[0]);
-      update_last_value(pipeline->env, 1);// TODO: set 1 as ERROR
+      update_last_value(pipeline->env, 1); // TODO: set 1 as ERROR
       return;
     }
 
@@ -261,7 +291,7 @@ void execute_pipeline(t_pipeline *pipeline)
 
     // Cleanup
     cleanup_redirections(pipeline->commands[0]);
-    //TODO: update_last_value(pipeline->env, 0);// TODO: set 1 as ERROR
+    // TODO: update_last_value(pipeline->env, 0);// TODO: set 1 as ERROR
     return;
   }
 
@@ -283,7 +313,7 @@ void execute_pipeline(t_pipeline *pipeline)
     {
       perror("fork: Erreur lors de la création du processus");
       free(child_pids);
-      update_last_value(pipeline->env, 1);// TODO: set 1 as ERROR
+      update_last_value(pipeline->env, 1); // TODO: set 1 as ERROR
       return;
     }
 
@@ -338,6 +368,6 @@ void execute_pipeline(t_pipeline *pipeline)
   }
 
   free(child_pids);
-  update_last_value(pipeline->env, last_command_status);// TODO: set 1 as ERROR
+  update_last_value(pipeline->env, last_command_status); // TODO: set 1 as ERROR
   return;
 }

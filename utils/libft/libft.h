@@ -25,7 +25,7 @@ typedef struct s_list
 char				*ft_strdup(const char *s1);
 char				*ft_itoa(long long n);
 char				*ft_strrchr(const char *s, int c);
-char				*ft_strjoin(char *s1, const char *s2);
+char				*ft_strjoin(const char *s1, const char *s2);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char				*ft_strnstr(const char *s1, const char *s2, size_t n);
 char				*ft_strrchr(const char *s, int c);

@@ -13,7 +13,7 @@ int	main(void)
 	while (1)
 	{
 		// Lit la ligne de commande [input_handling.c]
-		cmd_line = read_command_line();
+		cmd_line = read_command_line(env);
 		// Gere Ctrl+D [input_handling.c]
 		handle_eof(cmd_line);
 		cmd_line = dollex(cmd_line, env);
