@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 12:46:08 by jsarter           #+#    #+#             */
-/*   Updated: 2025/03/28 15:13:29 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/03/31 15:54:01 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	out_of_env(t_env **env, char *name)
 	t_env	*ptr;
 	t_env	*ptr_prev;
 
-	ptr = (*env)->next;
+	ptr = (*env);
 	ptr_prev = ptr;
 	ptr = ptr->next;
 	if (ft_strcmp(ptr_prev->name, name) == 0)
@@ -71,11 +71,15 @@ int	ft_unset(char **v, t_env **env)
 
 	c = get_c(v);
 	if (c == 0)
-		print_env(env);
+		return (0);
 	i = 1;
 	while (i < c)
 	{
-		out_of_env(env, v[i]);
+		if (v[i])
+		{
+			if (ft_strcmp("_", v[i]) != 0 || ft_strcmp("?", v[i]) != 0)
+				out_of_env(env, v[i]);
+		}
 		i++;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 12:22:51 by jsarter           #+#    #+#             */
-/*   Updated: 2025/03/28 15:11:20 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/03/31 14:54:52 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@
 int	is_egal(char *str)
 {
 	int	i;
+	int first_equal;
 	
-	if (ft_isalpha(str[0]) != 1)
+	if (ft_isalpha(str[0]) != 1 && str[0] != '_')
 		return (-1);
 	i = 1;
+	first_equal = 0;
 	while (str[i])
 	{
 		if (ft_isalnum(str[i]) == 0)
@@ -27,10 +29,12 @@ int	is_egal(char *str)
 			if (str[i] != '_' && str[i] != '=')
 				return (-1);
 		}
-		//if (str[i] == '=')
-		//	return (i);
+		if (str[i] == '=' && first_equal == 0)
+			first_equal = i;
 		i++;
 	}
+	if (first_equal == 1 && str[0] == '_')
+		return -1;
 	return (0);
 }
 

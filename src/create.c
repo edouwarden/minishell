@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 15:00:33 by jsarter           #+#    #+#             */
-/*   Updated: 2025/03/31 13:12:47 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/03/31 15:42:45 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,9 @@ t_env **remember_no_env(t_env **env)
 	tmp = new_env(ft_strdup("LAST_RESULT"), ft_strdup("0"));
 	add_front_env(tmp, env);
 	handle_shell_level(env);
+	ptr = getcwd(NULL, 0);
+	add_to_bis(env, ft_strdup("_"), ft_strjoin(ptr,"/./minishell"));
+	free(ptr);
 	return (env);
 }
 
