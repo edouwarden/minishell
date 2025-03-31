@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:43:21 by jsarter           #+#    #+#             */
-/*   Updated: 2025/03/31 16:09:46 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/03/31 16:35:29 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,9 @@ int	echo(char **arg)
 		printf("%s ", arg[i]);
 		i++;
 	}
-	if (old_i == i)
+	if ((old_i == i && !arg[i]) || (old_i == i && is_und_n(arg[i])))
 		return (0);
 	printf("%s", arg[i]);
 	printf("%c", n);
 	return (0);
 }
-
-/*int main(int c, char **v)
-{
-  if (c > 1)
-	echo(v);
-  return (0);
-}*/
