@@ -6,7 +6,7 @@
 /*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:16:19 by enormand          #+#    #+#             */
-/*   Updated: 2024/11/20 15:47:22 by enormand         ###   ########.fr       */
+/*   Updated: 2025/04/04 15:23:32 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef LIBFT_H
@@ -64,6 +64,6 @@ int ft_toupper(int c);
 int ft_strcmp(char *s1, char *s2);
 size_t ft_strlcat(char *dst, const char *src, size_t size);
 size_t ft_strlen(const char *s);
-
+char	*ft_strcpy(char *dest, char *src);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 12:30:35 by jsarter           #+#    #+#             */
-/*   Updated: 2025/03/20 16:20:11 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/04/04 15:32:42 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ int pwd(void)
   free(cwd);//free exeption
   if (!ptr)
   {
+  	if (errno == 2)
+	printf("pwd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
+		
     perror("pwd");
     return (1);
   }

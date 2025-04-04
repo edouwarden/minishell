@@ -23,12 +23,12 @@ int handle_heredoc(t_command *cmd)
     line = readline("> ");
     if (!line)
       break;
-    if (strcmp(line, cmd->heredoc_delim) == 0)
+    if (ft_strcmp(line, cmd->heredoc_delim) == 0)
     {
       ft_gc_free(line);
       break;
     }
-    if (write(heredoc_fd, line, strlen(line)) == -1 || write(heredoc_fd,
+    if (write(heredoc_fd, line, ft_strlen(line)) == -1 || write(heredoc_fd,
                                                              "\n", 1) == -1)
     {
       perror("minishell: heredoc write");
@@ -64,7 +64,7 @@ int handle_input_redirection(t_command *cmd)
     ft_putstr_fd(": No such file or directory\n", STDERR);
     return (-1);
   }
-  if (cmd->input_file && strcmp(cmd->input_file, ".heredoc_tmp") == 0)
+  if (cmd->input_file && ft_strcmp(cmd->input_file, ".heredoc_tmp") == 0)
     cleanup_heredoc_file();
   return (0);
 }

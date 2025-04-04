@@ -47,7 +47,7 @@ long long get_exit_status(char **args)
     handle_non_numeric_arg_error(args[1]);
     return (2);
   }
-  if (strcmp(args[1], "9223372036854775807") > 0)
+  if (ft_strcmp(args[1], "9223372036854775807") > 0)
   {
     handle_exit_error(args[1]);
     return (255);

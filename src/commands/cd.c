@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:01:34 by jsarter           #+#    #+#             */
-/*   Updated: 2025/03/31 13:38:54 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/04/04 14:57:13 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,18 +106,10 @@ int cd(char **path, t_env **env)
 	{
 		ptr = is_in_env(env, ft_strdup("HOME"));
 		if (ptr)
-			go_to_path(ptr->value, env);
+			error = go_to_path(ptr->value, env);
 		else
 			printf("cd: HOME not set\n");
 	}
-	/*else if (path[1][0] == '~' && path[1][1] == '\0')
-	{
-		ptr = is_in_env(env, ft_strdup("HOME"));
-		if (!ptr)
-			error = go_to_path(path[1], env);
-		else
-			go_to_path(ptr->value, env);
-	}*/
 	else
 		error = go_to_path(path[1], env);
 	return (error);

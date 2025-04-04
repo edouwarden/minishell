@@ -3,10 +3,10 @@
 
 int is_builtin(char *cmd)
 {
-  return (!strcmp(cmd, CMD_ECHO) || !strcmp(cmd, CMD_CD) ||
-          !strcmp(cmd, CMD_PWD) || !strcmp(cmd, CMD_EXPORT) ||
-          !strcmp(cmd, CMD_UNSET) || !strcmp(cmd, CMD_ENV) ||
-          !strcmp(cmd, CMD_EXIT));
+  return (!ft_strcmp(cmd, CMD_ECHO) || !ft_strcmp(cmd, CMD_CD) ||
+          !ft_strcmp(cmd, CMD_PWD) || !ft_strcmp(cmd, CMD_EXPORT) ||
+          !ft_strcmp(cmd, CMD_UNSET) || !ft_strcmp(cmd, CMD_ENV) ||
+          !ft_strcmp(cmd, CMD_EXIT));
 }
 
 void execute_builtin(char **args, t_env **env)
@@ -18,19 +18,19 @@ void execute_builtin(char **args, t_env **env)
 
   // Exécute la commande builtin appropriée
   value = -1;
-  if (!strcmp(args[0], CMD_ECHO))
+  if (!ft_strcmp(args[0], CMD_ECHO))
     value = echo(args);
-  else if (!strcmp(args[0], CMD_CD))
+  else if (!ft_strcmp(args[0], CMD_CD))
     value = cd(args, env);
-  else if (!strcmp(args[0], CMD_PWD))
+  else if (!ft_strcmp(args[0], CMD_PWD))
     value = pwd();
-  else if (!strcmp(args[0], CMD_EXPORT))
+  else if (!ft_strcmp(args[0], CMD_EXPORT))
     value = ft_export(args, env);
-  else if (!strcmp(args[0], CMD_UNSET))
+  else if (!ft_strcmp(args[0], CMD_UNSET))
     value = ft_unset(args, env);
-  else if (!strcmp(args[0], CMD_ENV))
+  else if (!ft_strcmp(args[0], CMD_ENV))
     value = print_env(env);
-  else if (!strcmp(args[0], CMD_EXIT))
+  else if (!ft_strcmp(args[0], CMD_EXIT))
   {
     int exit_code =get_exit_status(args);
     ft_gc_cleanup();

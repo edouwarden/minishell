@@ -110,26 +110,26 @@ static int handle_redirection_token(t_command *cmd, char **args, int *i)
     handle_newline_error();
     return (1);
   }
-  if (strcmp(token, REDIR_IN) == 0)
+  if (ft_strcmp(token, REDIR_IN) == 0)
   {
     if (cmd->input_file)
       ft_gc_free(cmd->input_file);
     cmd->input_file = ft_strdup(next_arg);
   }
-  else if (strcmp(token, REDIR_OUT) == 0)
+  else if (ft_strcmp(token, REDIR_OUT) == 0)
   {
     if (cmd->output_file)
       ft_gc_free(cmd->output_file);
     cmd->output_file = ft_strdup(next_arg);
     cmd->append_mode = 0;
   }
-  else if (strcmp(token, REDIR_HEREDOC) == 0)
+  else if (ft_strcmp(token, REDIR_HEREDOC) == 0)
   {
     if (cmd->heredoc_delim)
       ft_gc_free(cmd->heredoc_delim);
     cmd->heredoc_delim = ft_strdup(next_arg);
   }
-  else if (strcmp(token, REDIR_APPEND) == 0)
+  else if (ft_strcmp(token, REDIR_APPEND) == 0)
   {
     if (cmd->output_file)
       ft_gc_free(cmd->output_file);

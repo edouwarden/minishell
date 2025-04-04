@@ -8,14 +8,14 @@ char *join_path(char *path, char *cmd)
 
   if (!path || !cmd)
     return (NULL);
-  path_len = strlen(path);
-  cmd_len = strlen(cmd);
+  path_len = ft_strlen(path);
+  cmd_len = ft_strlen(cmd);
   full_path = ft_calloc(path_len + cmd_len + 2, sizeof(char));
   if (!full_path)
     return (NULL);
-  strcpy(full_path, path);
+  ft_strcpy(full_path, path);
   full_path[path_len] = '/';
-  strcpy(full_path + path_len + 1, cmd);
+  ft_strcpy(full_path + path_len + 1, cmd);
   return (full_path);
 }
 
@@ -29,7 +29,7 @@ char **get_paths(char **envp)
   i = 0;
   while (envp[i])
   {
-    if (strncmp(envp[i], "PATH=", 5) == 0)
+    if (ft_strncmp(envp[i], "PATH=", 5) == 0)
     {
       paths = ft_split(envp[i] + 5, ':');
       if (!paths)

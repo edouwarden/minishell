@@ -98,7 +98,7 @@ char **env_list_to_array(t_env *env)
       continue;
     }
     // Calculer la taille nécessaire
-    total_len = strlen(current->name) + strlen(current->value) + 2;
+    total_len = ft_strlen(current->name) + ft_strlen(current->value) + 2;
     str = ft_calloc(total_len, sizeof(char *));
     if (!str)
     {

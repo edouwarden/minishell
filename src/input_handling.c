@@ -53,13 +53,13 @@ char *concat(const char *str1, const char *str2, const char *str3, const char *s
 char *get_relative_path(const char *path, const char *home)
 {
   // If home is not a prefix of path, return NULL or the full path
-  if (strncmp(path, home, strlen(home)) != 0)
+  if (ft_strncmp(path, home, ft_strlen(home)) != 0)
   {
     return ft_strdup(path); // or return NULL depending on your needs
   }
 
   // Calculate the position after the home directory
-  const char *relative = path + strlen(home);
+  const char *relative = path + ft_strlen(home);
 
   // Skip any leading slashes
   while (*relative == '/')
