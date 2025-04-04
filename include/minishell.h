@@ -6,7 +6,7 @@
 /*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 14:46:30 by enormand          #+#    #+#             */
-/*   Updated: 2025/03/04 14:52:26 by enormand         ###   ########.fr       */
+/*   Updated: 2025/04/04 17:55:33 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int handle_input_redirection(t_command *cmd);
 int handle_output_redirection(t_command *cmd);
 int handle_heredoc(t_command *cmd);
 void cleanup_redirections(t_command *cmd);
-long long get_exit_status(char **args);
+long long get_exit_status(char **args, t_env **env);
 
 void debug_str_list(char **str);
 

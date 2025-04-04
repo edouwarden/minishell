@@ -32,7 +32,7 @@ void execute_builtin(char **args, t_env **env)
     value = print_env(env);
   else if (!ft_strcmp(args[0], CMD_EXIT))
   {
-    int exit_code =get_exit_status(args);
+    int exit_code =get_exit_status(args, env);
     ft_gc_cleanup();
     exit(exit_code);
   }

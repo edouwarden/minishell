@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:07:56 by jsarter           #+#    #+#             */
-/*   Updated: 2025/03/28 17:40:59 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/04/04 17:57:03 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,16 @@ int ft_isnum(char *str)
   return (1);
 }
 
-long long get_exit_status(char **args)
+long long get_exit_status(char **args, t_env **env)
 {
   long long status;
 
   status = 0;
   if (!args || !args[1])
-    return (0);
-
+  {
+  	printf("no args ?\n");
+    return (atoi((*env)->value));
+	}
   if (args[2] && *args[2])
   {
     printf("test\n");
