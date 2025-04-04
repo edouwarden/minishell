@@ -45,7 +45,7 @@ t_env *new_env(char *n, char *v)
 {
   t_env *new_node;
 
-  new_node = (t_env *)ft_calloc(1,sizeof(t_env));
+  new_node = (t_env *)ft_calloc(1, sizeof(t_env));
   if (!n || !v || !new_node)
   {
     if (n)
@@ -107,37 +107,20 @@ void handle_shell_level(t_env **env)
 
 t_env **remember_no_env(t_env **env)
 {
-	t_env	*tmp;
-	char	*ptr;
-
-	ptr = ft_calloc(4, sizeof(char));
-	ptr[0] = 'P';
-	ptr[1] = 'W';
-	ptr[2] = 'D';
-	add_to_bis(env, ptr, getcwd(NULL, 0));
-	tmp = new_env(ft_strdup("LAST_RESULT"), ft_strdup("0"));
-	add_front_env(tmp, env);
-	handle_shell_level(env);
-	ptr = getcwd(NULL, 0);
-	add_to_bis(env, ft_strdup("_"), ft_strjoin(ptr,"/./minishell"));
-	free(ptr);//free expection
-	return (env);
-}
-
-t_env	**create_env(void)
-{
   t_env *tmp;
   char *ptr;
-  char *cwd;
 
   ptr = ft_calloc(4, sizeof(char));
-  ft_strlcpy(ptr, "PWD", 3);
-  cwd = getcwd(NULL, 0);
-  add_to_bis(env, ptr, ft_strdup(cwd));
-  free(cwd);//free execption
+  ptr[0] = 'P';
+  ptr[1] = 'W';
+  ptr[2] = 'D';
+  add_to_bis(env, ptr, getcwd(NULL, 0));
   tmp = new_env(ft_strdup("LAST_RESULT"), ft_strdup("0"));
   add_front_env(tmp, env);
   handle_shell_level(env);
+  ptr = getcwd(NULL, 0);
+  add_to_bis(env, ft_strdup("_"), ft_strjoin(ptr, "/./minishell"));
+  free(ptr); // free expection
   return (env);
 }
 
@@ -148,7 +131,7 @@ t_env **create_env(void)
   t_env *tmp;
   t_env **list;
 
-  list = (t_env **)ft_calloc(1,sizeof(t_env *));
+  list = (t_env **)ft_calloc(1, sizeof(t_env *));
   if (!list)
     return (NULL);
   envp = __environ;
