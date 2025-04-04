@@ -33,7 +33,7 @@ char	*get_n(char *env)
 	i = 0;
 	while (env[i] != '=' && env[i])
 		i++;
-	tmp = (char *) calloc(sizeof(char), i + 1);
+	tmp = (char *) ft_calloc(sizeof(char), i + 1);
 	if (!tmp)
 		return (NULL);
 	ft_strncpy(env, tmp, i);
@@ -52,7 +52,7 @@ char	*get_v(char *env)
 	len = ft_strlen(env);
 	if (i == len)
 		return (NULL);
-	tmp = (char *) calloc(sizeof(char), (len - i) + 1);
+	tmp = (char *) ft_calloc(sizeof(char), (len - i) + 1);
 	if (!tmp)
 		return (NULL);
 	ft_strncpy(env + i + 1, tmp, len - i);

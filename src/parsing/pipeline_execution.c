@@ -36,6 +36,7 @@ static void setup_pipes(t_pipeline *pipeline)
     {
       perror("pipe");
       free_pipeline(pipeline);
+      ft_gc_cleanup();
       exit(EXIT_FAILURE);
     }
     pipe_index++;
@@ -83,7 +84,7 @@ char **env_list_to_array(t_env *env)
     current = current->next;
   }
   // Allouer le tableau + case NULL finale
-  array = malloc(sizeof(char *) * (len + 1));
+  array = ft_calloc(len + 1, sizeof(char *) );
   if (!array)
     return (NULL);
   current = env;
@@ -98,13 +99,13 @@ char **env_list_to_array(t_env *env)
     }
     // Calculer la taille nécessaire
     total_len = strlen(current->name) + strlen(current->value) + 2;
-    str = malloc(total_len);
+    str = ft_calloc(total_len, sizeof(char *));
     if (!str)
     {
       // Libérer la mémoire en cas d'erreur
       while (i-- > 0)
-        free(array[i]);
-      free(array);
+        ft_gc_free(array[i]);
+      ft_gc_free(array);
       return (NULL);
     }
     // Formater la chaîne
@@ -131,24 +132,28 @@ static void execute_piped_command(t_command *cmd, t_env **envp)
   if (cmd->heredoc_delim && handle_heredoc(cmd) == -1)
   {
     cleanup_redirections(cmd);
+    ft_gc_cleanup();
     exit(EXIT_FAILURE);
   }
   // Handle input redirection
   if (handle_input_redirection(cmd) == -1)
   {
     cleanup_redirections(cmd);
+    ft_gc_cleanup();
     exit(EXIT_FAILURE);
   }
   // Handle output redirection
   if (handle_output_redirection(cmd) == -1)
   {
     cleanup_redirections(cmd);
+    ft_gc_cleanup();
     exit(EXIT_FAILURE);
   }
   // If the command has no arguments after redirection processing, exit
   if (!cmd->args[0])
   {
     cleanup_redirections(cmd);
+    ft_gc_cleanup();
     exit(EXIT_SUCCESS);
   }
   // Handle pipe redirections
@@ -158,6 +163,7 @@ static void execute_piped_command(t_command *cmd, t_env **envp)
     {
       perror("dup2: pipe read redirection failed");
       cleanup_redirections(cmd);
+      ft_gc_cleanup();
       exit(EXIT_FAILURE);
     }
     close(cmd->pipe_read);
@@ -168,6 +174,7 @@ static void execute_piped_command(t_command *cmd, t_env **envp)
     {
       perror("dup2: pipe write redirection failed");
       cleanup_redirections(cmd);
+      ft_gc_cleanup();
       exit(EXIT_FAILURE);
     }
     close(cmd->pipe_write);
@@ -179,6 +186,7 @@ static void execute_piped_command(t_command *cmd, t_env **envp)
     {
       perror("dup2: input file redirection failed");
       cleanup_redirections(cmd);
+      ft_gc_cleanup();
       exit(EXIT_FAILURE);
     }
   }
@@ -188,6 +196,7 @@ static void execute_piped_command(t_command *cmd, t_env **envp)
     {
       perror("dup2: output file redirection failed");
       cleanup_redirections(cmd);
+      ft_gc_cleanup();
       exit(EXIT_FAILURE);
     }
   }
@@ -196,6 +205,7 @@ static void execute_piped_command(t_command *cmd, t_env **envp)
   {
     execute_builtin(cmd->args, envp);
     cleanup_redirections(cmd);
+    ft_gc_cleanup();
     exit(status);
   }
   // Handle external commands
@@ -204,6 +214,7 @@ static void execute_piped_command(t_command *cmd, t_env **envp)
   {
     perror("Failed to create environment array");
     cleanup_redirections(cmd);
+    ft_gc_cleanup();
     exit(EXIT_FAILURE);
   }
   // Check permissions first if it's an absolute or relative path
@@ -218,6 +229,7 @@ static void execute_piped_command(t_command *cmd, t_env **envp)
         ft_putstr_fd(": Permission denied\n", STDERR);
         free_array(env);
         cleanup_redirections(cmd);
+        ft_gc_cleanup();
         exit(126); // Permission denied exit code
       }
       command_path = ft_strdup(cmd->args[0]);
@@ -227,6 +239,7 @@ static void execute_piped_command(t_command *cmd, t_env **envp)
       handle_command_error(cmd->args[0]);
       free_array(env);
       cleanup_redirections(cmd);
+      ft_gc_cleanup();
       exit(127); // Command not found exit code
     }
   }
@@ -238,6 +251,7 @@ static void execute_piped_command(t_command *cmd, t_env **envp)
       handle_command_error(cmd->args[0]);
       free_array(env);
       cleanup_redirections(cmd);
+      ft_gc_cleanup();
       exit(127); // Command not found exit code
     }
   }
@@ -245,9 +259,10 @@ static void execute_piped_command(t_command *cmd, t_env **envp)
   if (status == -1)
   {
     perror("execve: command execution failed");
-    free(command_path);
+    ft_gc_free(command_path);
     free_array(env);
     cleanup_redirections(cmd);
+    ft_gc_cleanup();
     exit(126); // Command invoked cannot execute
   }
 }
@@ -312,7 +327,7 @@ void execute_pipeline(t_pipeline *pipeline)
     if (child_pids[cmd_index] == -1)
     {
       perror("fork: Erreur lors de la création du processus");
-      free(child_pids);
+      ft_gc_free(child_pids);
       update_last_value(pipeline->env, 1); // TODO: set 1 as ERROR
       return;
     }
@@ -335,6 +350,7 @@ void execute_pipeline(t_pipeline *pipeline)
         pipe_fd++;
       }
       execute_piped_command(pipeline->commands[cmd_index], pipeline->env);
+      ft_gc_cleanup();
       exit(EXIT_FAILURE);
       // Ne devrait jamais être atteint si execute_piped_command réussit
     }
@@ -367,7 +383,7 @@ void execute_pipeline(t_pipeline *pipeline)
     cmd_index--;
   }
 
-  free(child_pids);
+  ft_gc_free(child_pids);
   update_last_value(pipeline->env, last_command_status); // TODO: set 1 as ERROR
   return;
 }

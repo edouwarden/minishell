@@ -26,42 +26,43 @@ void    add_to_bis(t_env **env, char *n ,char *v)
 void set_to_old_pwd(t_env **env, t_env *pwd, int old)
 {
 	char *ptr;
+  char *cwd;
 
 	if (old)
 	{
 		ptr = ft_calloc(7, sizeof(char));
 		if (!ptr)
 			return ;
-		ptr[0] = 'O';
-		ptr[1] = 'L';
-		ptr[2] = 'D';
-		ptr[3] = 'P';
-		ptr[4] = 'W';
-		ptr[5] = 'D';
+    ft_strlcpy(ptr,"OLDPWD",6);
 		add_to_bis(env, ptr, ft_strdup(pwd->value));
-		pwd->value = getcwd(NULL, 0);
+    cwd = getcwd(NULL, 0);
+		pwd->value = ft_strdup(cwd);
+    free(cwd);
 	}
-	else 
+	else
 	{
 		ptr = ft_calloc(4, sizeof(char));
 		if (!ptr)
 			return ;
-		ptr[0] = 'P';
-		ptr[1] = 'W';
-		ptr[2] = 'D';
-		add_to_bis(env, ptr, getcwd(NULL, 0));
+		ft_strlcpy(ptr,"PWD",3);
+    cwd = getcwd(NULL, 0);
+		add_to_bis(env, ptr, ft_strdup(cwd));
+    free(cwd);
 	}
 	return ;
 }
 
 void update_env(t_env **env, t_env *old_pwd, t_env *pwd)
 {
+  char *cwd;
 	if ((!old_pwd && !pwd))
 		return ;
 	else if (pwd && old_pwd)
 	{
 		old_pwd->value = pwd->value;
-		pwd->value = getcwd(NULL, 0);
+    cwd =getcwd(NULL, 0);
+		pwd->value = ft_strdup(cwd);
+    free(cwd);
 		return ;
 	}
 	else if (pwd && !old_pwd)

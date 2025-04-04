@@ -13,25 +13,28 @@
 #include "../../include/env.h"
 #include "../../include/minishell.h"
 
-int	pwd(void)
+int pwd(void)
 {
-	char	*ptr;
+  char *ptr;
+  char *cwd;
 
-	ptr = NULL;
-	ptr = getcwd(ptr, 0);
-	if (!ptr)
-	{
-		perror("pwd");
-		return (1);
-	}
-	printf("%s\n", ptr);
-	free(ptr);
-	return (0);
+  ptr = NULL;
+  cwd = getcwd(NULL, 0);
+  ptr = ft_strdup(cwd);
+  free(cwd);
+  if (!ptr)
+  {
+    perror("pwd");
+    return (1);
+  }
+  printf("%s\n", ptr);
+  ft_gc_free(ptr);
+  return (0);
 }
 /*
 int	main(void)
 {
-	pwd();
-	return(0);
+  pwd();
+  return(0);
 }
 */

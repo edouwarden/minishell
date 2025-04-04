@@ -31,6 +31,10 @@ void execute_builtin(char **args, t_env **env)
   else if (!strcmp(args[0], CMD_ENV))
     value = print_env(env);
   else if (!strcmp(args[0], CMD_EXIT))
-    exit(get_exit_status(args));
+  {
+    int exit_code =get_exit_status(args);
+    ft_gc_cleanup();
+    exit(exit_code);
+  }
   update_last_value(env, value);
 }

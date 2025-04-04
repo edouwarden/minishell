@@ -35,17 +35,17 @@ char *concat(const char *str1, const char *str2, const char *str3, const char *s
     return NULL;
 
   char *temp2 = ft_strjoin(temp1, str3);
-  free(temp1);
+  ft_gc_free(temp1);
   if (!temp2)
     return NULL;
 
   char *temp3 = ft_strjoin(temp2, str4);
-  free(temp2);
+  ft_gc_free(temp2);
   if (!temp3)
     return NULL;
 
   char *result = ft_strjoin(temp3, str5);
-  free(temp3);
+  ft_gc_free(temp3);
 
   return result;
 }
@@ -84,6 +84,8 @@ char *read_command_line(t_env **env)
   char *home_display = NULL;
   char *prompt = NULL;
   char *result_str = NULL;
+  char *cwd ;
+  char *current_path;
 
   if (env && *env)
   {
@@ -92,14 +94,16 @@ char *read_command_line(t_env **env)
       result_str = "◉ ";
     }
 
-    char *ptr = NULL;
-    char *current_path = getcwd(ptr, 0);
+    cwd = getcwd(NULL, 0);
+    current_path = ft_strdup(cwd);
+    free(cwd);
+
     t_env *env_home = is_in_env(env, ft_strdup("HOME"));
 
     if (current_path && env_home && env_home->value)
     {
       home_display = get_relative_path(current_path, env_home->value);
-      free(current_path);
+      ft_gc_free(current_path);
     }
 
     if (!home_display)
@@ -110,13 +114,13 @@ char *read_command_line(t_env **env)
     if (home_display)
     {
       prompt = concat("\033[0;31m", result_str, "\e[1;32mMinishell\e[2;36m ", home_display, "\e[0m\e[1;32m>\e[0m ");
-      free(home_display);
+      ft_gc_free(home_display);
     }
 
     if (prompt)
     {
       line = readline(prompt);
-      free(prompt);
+      ft_gc_free(prompt);
       if (line && *line)
       {
         add_history(line);
@@ -146,6 +150,7 @@ void handle_eof(char *line)
   if (!line)
   {
     printf("exit\n");
+    ft_gc_cleanup();
     exit(0);
   }
 }

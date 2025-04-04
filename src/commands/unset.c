@@ -22,20 +22,20 @@ t_env *is_in_env(t_env **env, char *name)
   {
     if (ft_strcmp(ptr->name, name) == 0)
     {
-      free(name);
+      ft_gc_free(name);
       return (ptr);
     }
     ptr = ptr->next;
   }
-  free(name);
+  ft_gc_free(name);
   return (NULL);
 }
 
 void del_one_env(t_env *ptr)
 {
-  free(ptr->name);
-  free(ptr->value);
-  free(ptr);
+  ft_gc_free(ptr->name);
+  ft_gc_free(ptr->value);
+  ft_gc_free(ptr);
 }
 
 void out_of_env(t_env **env, char *name)

@@ -113,26 +113,26 @@ static int handle_redirection_token(t_command *cmd, char **args, int *i)
   if (strcmp(token, REDIR_IN) == 0)
   {
     if (cmd->input_file)
-      free(cmd->input_file);
+      ft_gc_free(cmd->input_file);
     cmd->input_file = ft_strdup(next_arg);
   }
   else if (strcmp(token, REDIR_OUT) == 0)
   {
     if (cmd->output_file)
-      free(cmd->output_file);
+      ft_gc_free(cmd->output_file);
     cmd->output_file = ft_strdup(next_arg);
     cmd->append_mode = 0;
   }
   else if (strcmp(token, REDIR_HEREDOC) == 0)
   {
     if (cmd->heredoc_delim)
-      free(cmd->heredoc_delim);
+      ft_gc_free(cmd->heredoc_delim);
     cmd->heredoc_delim = ft_strdup(next_arg);
   }
   else if (strcmp(token, REDIR_APPEND) == 0)
   {
     if (cmd->output_file)
-      free(cmd->output_file);
+      ft_gc_free(cmd->output_file);
     cmd->output_file = ft_strdup(next_arg);
     cmd->append_mode = 1;
   }
@@ -173,11 +173,10 @@ static char **process_redirections(t_command *cmd, char **args)
     }
     else
     {
-      // Handle the redirection but don't free the arguments yet
       int error = handle_redirection_token(cmd, args, &i);
       if (error)
         return (NULL);
-      i++; // Skip the argument of redirection
+      i++;
       continue;
     }
     i++;
@@ -199,8 +198,8 @@ static char **process_redirections(t_command *cmd, char **args)
       if (!new_args[j - 1])
       {
         while (--j >= 0)
-          free(new_args[j]);
-        free(new_args);
+          ft_gc_free(new_args[j]);
+        ft_gc_free(new_args);
         return (NULL);
       }
     }
@@ -212,14 +211,14 @@ static char **process_redirections(t_command *cmd, char **args)
   }
   new_args[j] = NULL;
 
-  // Now free the original args array and its contents
+  // Now ft_gc_free the original args array and its contents
   i = 0;
   while (args[i])
   {
-    free(args[i]);
+    ft_gc_free(args[i]);
     i++;
   }
-  free(args);
+  ft_gc_free(args);
 
   return (new_args);
 }
@@ -251,7 +250,7 @@ t_pipeline *split_command(char *cmd)
   pipeline->cmd_count = cmd_count;
   if (!pipeline->commands)
   {
-    free(pipeline);
+    ft_gc_free(pipeline);
     return (NULL);
   }
   // Parse chaque commande entre les pipes
@@ -264,15 +263,11 @@ t_pipeline *split_command(char *cmd)
     {
       // Parse les arguments de la commande actuelle
       current_args = split_args(cmd, cmd_start, cmd[current_pos + 1] == '\0' ? current_pos + 1 : current_pos);
-      /* Debug
-       int i = 0;
-      while (current_args[i])
-      {
-        printf("\033[0;33m%s\033[0m\n", current_args[i]);
-        i++;
-      }
-      */
-      if (!current_args)
+      /* Debug*/
+      debug_str_list(current_args);
+
+      //*/
+      if (!current_args || !*current_args)
       {
         free_pipeline(pipeline);
         return (NULL);

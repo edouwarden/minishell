@@ -49,6 +49,9 @@
 #define REDIR_HEREDOC "<<"
 #define REDIR_APPEND ">>"
 
+#ifndef DEBUG
+#define DEBUG 0
+#endif
 /*
 ** Structures
 */
@@ -115,5 +118,7 @@ int handle_output_redirection(t_command *cmd);
 int handle_heredoc(t_command *cmd);
 void cleanup_redirections(t_command *cmd);
 long long get_exit_status(char **args);
+
+void debug_str_list(char **str);
 
 #endif

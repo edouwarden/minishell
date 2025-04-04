@@ -25,22 +25,22 @@ int handle_heredoc(t_command *cmd)
       break;
     if (strcmp(line, cmd->heredoc_delim) == 0)
     {
-      free(line);
+      ft_gc_free(line);
       break;
     }
     if (write(heredoc_fd, line, strlen(line)) == -1 || write(heredoc_fd,
                                                              "\n", 1) == -1)
     {
       perror("minishell: heredoc write");
-      free(line);
+      ft_gc_free(line);
       close(heredoc_fd);
       return (-1);
     }
-    free(line);
+    ft_gc_free(line);
   }
   close(heredoc_fd);
   if (cmd->input_file)
-    free(cmd->input_file);
+    ft_gc_free(cmd->input_file);
   cmd->input_file = ft_strdup(".heredoc_tmp");
   if (!cmd->input_file)
   {
@@ -97,17 +97,17 @@ void cleanup_redirections(t_command *cmd)
 {
   if (cmd->input_file)
   {
-    free(cmd->input_file);
+    ft_gc_free(cmd->input_file);
     cmd->input_file = NULL;
   }
   if (cmd->output_file)
   {
-    free(cmd->output_file);
+    ft_gc_free(cmd->output_file);
     cmd->output_file = NULL;
   }
   if (cmd->heredoc_delim)
   {
-    free(cmd->heredoc_delim);
+    ft_gc_free(cmd->heredoc_delim);
     cmd->heredoc_delim = NULL;
   }
   if (cmd->input_fd != STDIN)
