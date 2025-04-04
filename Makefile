@@ -17,6 +17,7 @@ SRCS		=	src/main.c \
 				src/dollex.c \
 				src/commands/echo.c \
 				src/commands/env.c \
+				src/commands/convert_env_to_array.c \
 				src/commands/export.c \
 				utils/ft_lstlast.c \
 				src/commands/unset.c \
