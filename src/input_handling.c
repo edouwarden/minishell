@@ -96,7 +96,7 @@ char *read_command_line(t_env **env)
 
     cwd = getcwd(NULL, 0);
     current_path = ft_strdup(cwd);
-    free(cwd);
+    free(cwd);//free exeption
 
     t_env *env_home = is_in_env(env, ft_strdup("HOME"));
 

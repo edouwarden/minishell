@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 15:00:33 by jsarter           #+#    #+#             */
-/*   Updated: 2025/03/31 13:12:47 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/03/31 15:42:45 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,25 @@ void handle_shell_level(t_env **env)
 
 t_env **remember_no_env(t_env **env)
 {
+	t_env	*tmp;
+	char	*ptr;
+
+	ptr = ft_calloc(4, sizeof(char));
+	ptr[0] = 'P';
+	ptr[1] = 'W';
+	ptr[2] = 'D';
+	add_to_bis(env, ptr, getcwd(NULL, 0));
+	tmp = new_env(ft_strdup("LAST_RESULT"), ft_strdup("0"));
+	add_front_env(tmp, env);
+	handle_shell_level(env);
+	ptr = getcwd(NULL, 0);
+	add_to_bis(env, ft_strdup("_"), ft_strjoin(ptr,"/./minishell"));
+	free(ptr);//free expection
+	return (env);
+}
+
+t_env	**create_env(void)
+{
   t_env *tmp;
   char *ptr;
   char *cwd;
@@ -115,7 +134,7 @@ t_env **remember_no_env(t_env **env)
   ft_strlcpy(ptr, "PWD", 3);
   cwd = getcwd(NULL, 0);
   add_to_bis(env, ptr, ft_strdup(cwd));
-  free(cwd);
+  free(cwd);//free execption
   tmp = new_env(ft_strdup("LAST_RESULT"), ft_strdup("0"));
   add_front_env(tmp, env);
   handle_shell_level(env);

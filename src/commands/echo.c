@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:43:21 by jsarter           #+#    #+#             */
-/*   Updated: 2025/03/21 14:59:55 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/03/31 16:35:29 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	is_und_n(char *str)
 int	echo(char **arg)
 {
 	int		i;
+	int		old_i;
 	char	n;
 	int		c;
 
@@ -40,23 +41,19 @@ int	echo(char **arg)
 	c = get_c(arg);
 	if (!arg || c == 1)
 		return (0);
-	while (is_und_n(arg[i]) && (i < c))
+	while (is_und_n(arg[i]) && (i < c - 1))
 		i++;
 	if (i == 1)
 		n = '\n';
+	old_i = i;
 	while (i < c - 1)
 	{
 		printf("%s ", arg[i]);
 		i++;
 	}
+	if ((old_i == i && !arg[i]) || (old_i == i && is_und_n(arg[i])))
+		return (0);
 	printf("%s", arg[i]);
 	printf("%c", n);
 	return (0);
 }
-
-/*int main(int c, char **v)
-{
-  if (c > 1)
-	echo(v);
-  return (0);
-}*/

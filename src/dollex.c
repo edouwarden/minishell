@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:23:10 by jsarter           #+#    #+#             */
-/*   Updated: 2025/03/28 13:13:13 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/03/31 16:44:49 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,9 @@
 
 int is_stop(char c)
 {
-  if (c == ' ')
-    return (0);
-  if (c == '$')
-    return (0);
-  if (c == '"')
-    return (0);
-  if (c == '\'')
-    return (0);
-  if (c == '\t')
-    return (0);
-  if (c == '\n')
-    return (0);
-  if (c == '|')
-    return (0);
-  if (c == '\0')
-    return (0);
-  if (c == '?')
-    return (0);
-  if (c == '.')
-    return (0);
-  return (1);
+	if (ft_isalnum(c) || c == '_')
+		return (1);
+	return (0);
 }
 
 char *add_final(int i, int len_name, char *str, char *value)

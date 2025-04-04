@@ -21,7 +21,7 @@ int pwd(void)
   ptr = NULL;
   cwd = getcwd(NULL, 0);
   ptr = ft_strdup(cwd);
-  free(cwd);
+  free(cwd);//free exeption
   if (!ptr)
   {
     perror("pwd");
