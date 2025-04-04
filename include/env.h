@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:18:57 by jsarter           #+#    #+#             */
-/*   Updated: 2025/04/04 16:04:44 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/04/04 17:47:03 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int		cd(char **path, t_env **env);
 int		pwd(void);
 void	update_last_value(t_env **env, long int value);
 char	**convert_env_to_array(t_env **env);
+void	free_array_env(char **array);
 
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:39:14 by jsarter           #+#    #+#             */
-/*   Updated: 2025/04/04 16:13:38 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/04/04 17:47:53 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,20 @@ int get_env_len(t_env **env)
   return (i);
 }
 
+void free_array_env(char **array)
+{
+	int i;
+
+	i = 0;
+	while(array[i])
+	{
+		ft_gc_free(array[i]);
+		i++;
+	}
+	ft_gc_free(array[i]);
+	ft_gc_free(array);
+}
+
 char *create_str_env(t_env *node)
 {
 	int len_name;
@@ -38,7 +52,6 @@ char *create_str_env(t_env *node)
 		return (NULL);
 	len_name = ft_strlen(node->name);
 	len_value = ft_strlen(node->value);
-
 	resu = ft_calloc(len_value + len_name + 2, sizeof(char));
 	if (!resu)
 		return (NULL);
