@@ -26,7 +26,7 @@ int is_egal(char *str)
 	{
 		if (ft_isalnum(str[i]) == 0)
 		{
-			if (str[i] != '_' && str[i] != '=')
+			if ((str[i] != '_' && str[i] != '=') && ((str[i] != '-' && str[i] != ' ') && first_equal != 0))
 				return (-1);
 		}
 		if (str[i] == '=' && first_equal == 0)

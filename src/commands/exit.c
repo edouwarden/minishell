@@ -34,13 +34,9 @@ long long get_exit_status(char **args, t_env **env)
 
   status = 0;
   if (!args || !args[1])
-  {
-  	printf("no args ?\n");
     return (atoi((*env)->value));
-	}
   if (args[2] && *args[2])
   {
-    printf("test\n");
     handle_too_many_args_error();
     return (1);
   }
@@ -54,14 +50,9 @@ long long get_exit_status(char **args, t_env **env)
     handle_exit_error(args[1]);
     return (255);
   }
+
   status = ft_atoi(args[1]);
   if (status < 0)
     return (156);
-  printf("%lld\n", status);
-  if (status >=0 && status > 9223372036854775807)
-  {
-    handle_exit_error(args[1]);
-    return (255);
-  }
   return (status);
 }
