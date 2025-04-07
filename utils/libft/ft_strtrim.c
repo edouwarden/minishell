@@ -12,43 +12,43 @@
 
 #include "libft.h"
 
-static int check(char const *str, char c)
+static int	check(char const *str, char c)
 {
-  int i;
+	int	i;
 
-  i = 0;
-  while (str[i])
-  {
-    if (str[i] == c)
-      return (1);
-    i++;
-  }
-  return (0);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
-char *ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char const *s1, char const *set)
 {
-  char *ptr;
-  int start;
-  int end;
-  int len;
-  int i;
+	char	*ptr;
+	int		start;
+	int		end;
+	int		len;
+	int		i;
 
-  start = 0;
-  end = ft_strlen(s1);
-  if (!s1 && !set)
-    return (NULL);
-  while (s1[start] && check(set, s1[start]))
-    start++;
-  while (start < end && check(set, s1[end - 1]))
-    end--;
-  len = end - start;
-  ptr = ft_calloc(len + 1, sizeof(char));
-  if (!ptr)
-    return (NULL);
-  i = 0;
-  while (end > start)
-    ptr[i++] = s1[start++];
-  ptr[i] = '\0';
-  return (ptr);
+	start = 0;
+	end = ft_strlen(s1);
+	if (!s1 && !set)
+		return (NULL);
+	while (s1[start] && check(set, s1[start]))
+		start++;
+	while (start < end && check(set, s1[end - 1]))
+		end--;
+	len = end - start;
+	ptr = ft_calloc(len + 1, sizeof(char));
+	if (!ptr)
+		return (NULL);
+	i = 0;
+	while (end > start)
+		ptr[i++] = s1[start++];
+	ptr[i] = '\0';
+	return (ptr);
 }

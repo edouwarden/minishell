@@ -11,20 +11,20 @@
 /* ************************************************************************** */
 #include "libft.h"
 
-char *ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-  char *substr;
+	char	*substr;
 
-  if (!s)
-    return (NULL);
-  if (len > ft_strlen(s) - start)
-    len = ft_strlen(s) - start;
-  if (start > ft_strlen(s))
-    return (ft_strdup(""));
-  substr = ft_calloc( len + 1, sizeof(char));
-  if (!substr)
-    return (NULL);
-  ft_memcpy(substr, &s[start], len);
-  substr[len] = '\0';
-  return (substr);
+	if (!s)
+		return (NULL);
+	if (len > ft_strlen(s) - start)
+		len = ft_strlen(s) - start;
+	if (start > ft_strlen(s))
+		return (ft_strdup(""));
+	substr = ft_calloc(len + 1, sizeof(char));
+	if (!substr)
+		return (NULL);
+	ft_memcpy(substr, &s[start], len);
+	substr[len] = '\0';
+	return (substr);
 }
