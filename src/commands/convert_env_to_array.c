@@ -6,34 +6,34 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:39:14 by jsarter           #+#    #+#             */
-/*   Updated: 2025/04/04 17:47:53 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/04/07 15:48:49 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/env.h"
 #include "../../include/minishell.h"
 
-int get_env_len(t_env **env)
+int	get_env_len(t_env **env)
 {
-  t_env *ptr;
-  int	i;
+	t_env	*ptr;
+	int		i;
 
-  ptr = (*env)->next;
-  i = 0;
-  while (ptr)
-  {
-    ptr = ptr->next;
-	i++;
-  }
-  return (i);
+	ptr = (*env)->next;
+	i = 0;
+	while (ptr)
+	{
+		ptr = ptr->next;
+		i++;
+	}
+	return (i);
 }
 
-void free_array_env(char **array)
+void	free_array_env(char **array)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(array[i])
+	while (array[i])
 	{
 		ft_gc_free(array[i]);
 		i++;
@@ -42,11 +42,11 @@ void free_array_env(char **array)
 	ft_gc_free(array);
 }
 
-char *create_str_env(t_env *node)
+char	*create_str_env(t_env *node)
 {
-	int len_name;
-	int len_value;
-	char *resu;
+	int		len_name;
+	int		len_value;
+	char	*resu;
 
 	if (!node)
 		return (NULL);
@@ -61,28 +61,27 @@ char *create_str_env(t_env *node)
 	return (resu);
 }
 
-
-char **convert_env_to_array(t_env **env)
+char	**convert_env_to_array(t_env **env)
 {
 	int		len;
 	int		i;
 	char	**array;
-  	t_env *ptr;
+	t_env	*ptr;
 
 	i = 1;
 	if (!env)
-		return(NULL);
+		return (NULL);
 	len = get_env_len(env);
 	array = ft_calloc(len + 1, sizeof(char *));
 	if (!array)
 		return (NULL);
-  	ptr = (*env)->next;
+	ptr = (*env)->next;
 	array[0] = create_str_env(ptr);
- 	while (ptr)
-  	{
-    	ptr = ptr->next;
+	while (ptr)
+	{
+		ptr = ptr->next;
 		array[i] = create_str_env(ptr);
 		i++;
-  	}
-	return(array);
+	}
+	return (array);
 }

@@ -6,42 +6,42 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 12:46:08 by jsarter           #+#    #+#             */
-/*   Updated: 2025/03/31 15:54:01 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/04/07 15:38:55 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/env.h"
 #include "../../include/minishell.h"
 
-t_env *is_in_env(t_env **env, char *name)
+t_env	*is_in_env(t_env **env, char *name)
 {
-  t_env *ptr;
+	t_env	*ptr;
 
-  ptr = (*env)->next;
-  while (ptr)
-  {
-    if (ft_strcmp(ptr->name, name) == 0)
-    {
-      ft_gc_free(name);
-      return (ptr);
-    }
-    ptr = ptr->next;
-  }
-  ft_gc_free(name);
-  return (NULL);
+	ptr = (*env)->next;
+	while (ptr)
+	{
+		if (ft_strcmp(ptr->name, name) == 0)
+		{
+			ft_gc_free(name);
+			return (ptr);
+		}
+		ptr = ptr->next;
+	}
+	ft_gc_free(name);
+	return (NULL);
 }
 
-void del_one_env(t_env *ptr)
+void	del_one_env(t_env *ptr)
 {
-  ft_gc_free(ptr->name);
-  ft_gc_free(ptr->value);
-  ft_gc_free(ptr);
+	ft_gc_free(ptr->name);
+	ft_gc_free(ptr->value);
+	ft_gc_free(ptr);
 }
 
-void out_of_env(t_env **env, char *name)
+void	out_of_env(t_env **env, char *name)
 {
-  t_env *ptr;
-  t_env *ptr_prev;
+	t_env	*ptr;
+	t_env	*ptr_prev;
 
 	ptr = (*env);
 	ptr_prev = ptr;
@@ -64,10 +64,10 @@ void out_of_env(t_env **env, char *name)
 	}
 }
 
-int ft_unset(char **v, t_env **env)
+int	ft_unset(char **v, t_env **env)
 {
-  int c;
-  int i;
+	int	c;
+	int	i;
 
 	c = get_c(v);
 	if (c == 0)
