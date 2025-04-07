@@ -48,7 +48,7 @@ long long	get_exit_status(char **args, t_env **env)
 	if (ft_strcmp(args[1], "9223372036854775807") > 0)
 	{
 		handle_exit_error(args[1]);
-		return (255);
+		return (2);
 	}
 	status = ft_atoi(args[1]);
 	if (status < 0)

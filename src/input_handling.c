@@ -16,10 +16,9 @@ void	handle_sigint(int sig)
 
 void	segfault_handler(int sig)
 {
-	(void)sig;
-	printf("\nSegmentation fault (SIGSEGV) reçu !\n");          
-		// TODO: sur la sortie error
-	printf("Adresse fautive (si disponible) : %p\n", (void *)0); // Simplifié
+	int	raison;
+	raison = (((&sig)[2])/10)%10;
+	handle_segfault_error(raison);
 	ft_gc_cleanup();
 	exit(1);
 }

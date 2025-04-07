@@ -95,6 +95,7 @@ void			handle_exit_error(char *arg);
 void			handle_newline_error(void);
 void			handle_non_numeric_arg_error(char *arg);
 void			handle_too_many_args_error(void);
+void			handle_segfault_error(int raison);
 void			free_commands(t_command **commands, int count);
 void			free_pipeline(t_pipeline *pipeline);
 
