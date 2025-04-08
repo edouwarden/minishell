@@ -21,7 +21,7 @@ int	pwd(void)
 	ptr = NULL;
 	cwd = getcwd(NULL, 0);
 	ptr = ft_strdup(cwd);
-	free(cwd);
+	ft_gc_normal_free(cwd);
 	if (!ptr)
 	{
 		if (errno == 2)

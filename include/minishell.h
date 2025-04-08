@@ -62,10 +62,10 @@ typedef struct s_command
 	int			pipe_write;
 	int			input_fd;
 	int			output_fd;
-	char *input_file;    // File for input redirection
-	char *output_file;   // File for output redirection
-	char *heredoc_delim; // Delimiter for heredoc
-	int append_mode;     // Flag for append mode (>>)
+	char		*input_file;
+	char		*output_file;
+	char		*heredoc_delim;
+	int			append_mode;
 }				t_command;
 
 typedef struct s_pipeline

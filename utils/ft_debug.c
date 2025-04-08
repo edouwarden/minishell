@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_debug.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/08 10:59:18 by enormand          #+#    #+#             */
+/*   Updated: 2025/04/08 11:16:25 by enormand         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 void	debug_str_list(char **str)
@@ -14,50 +26,42 @@ void	debug_str_list(char **str)
 	}
 }
 
+static void	debug_process_format(const char **format, va_list args)
+{
+	char	*s;
+
+	(*format)++;
+	if (**format == 's')
+	{
+		s = va_arg(args, char *);
+		if (!s)
+			printf("%s", "(null)");
+		else
+			printf("%s", s);
+	}
+	else if (**format == 'd')
+		printf("%d", va_arg(args, int));
+	else if (**format == 'c')
+		printf("%c", va_arg(args, int));
+	else if (**format == '%')
+		printf("%%");
+	(*format)++;
+}
+
 void	debug_printf(const char *format, ...)
 {
 	va_list	args;
-	char	*s;
-	int		d;
-	int		c;
 
 	if (!DEBUG)
 		return ;
 	printf("\033[0;33mdebug: ");
-	// Manually handle up to 5 arguments
 	va_start(args, format);
-	// This is a simplified approach that only works for basic format strings
 	while (*format)
 	{
 		if (*format == '%')
-		{
-			format++;
-			if (*format == 's')
-			{
-				s = va_arg(args, char *);
-				printf("%s", s ? s : "(null)");
-			}
-			else if (*format == 'd')
-			{
-				d = va_arg(args, int);
-				printf("%d", d);
-			}
-			else if (*format == 'c')
-			{
-				// Note: char is promoted to int in varargs
-				c = va_arg(args, int);
-				printf("%c", c);
-			}
-			else if (*format == '%')
-			{
-				printf("%%");
-			}
-			format++;
-		}
+			debug_process_format(&format, args);
 		else
-		{
 			putchar(*format++);
-		}
 	}
 	va_end(args);
 	printf("\033[0m\n");

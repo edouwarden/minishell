@@ -37,7 +37,7 @@ void	set_to_old_pwd(t_env **env, t_env *pwd, int old)
 		add_to_bis(env, ptr, ft_strdup(pwd->value));
 		cwd = getcwd(NULL, 0);
 		pwd->value = ft_strdup(cwd);
-		free(cwd);
+		ft_gc_normal_free(cwd);
 	}
 	else
 	{
@@ -47,7 +47,7 @@ void	set_to_old_pwd(t_env **env, t_env *pwd, int old)
 		ft_strlcpy(ptr, "PWD", 3);
 		cwd = getcwd(NULL, 0);
 		add_to_bis(env, ptr, ft_strdup(cwd));
-		free(cwd);
+		ft_gc_normal_free(cwd);
 	}
 	return ;
 }
@@ -63,7 +63,7 @@ void	update_env(t_env **env, t_env *old_pwd, t_env *pwd)
 		old_pwd->value = pwd->value;
 		cwd = getcwd(NULL, 0);
 		pwd->value = ft_strdup(cwd);
-		free(cwd);
+		ft_gc_normal_free(cwd);
 		return ;
 	}
 	else if (pwd && !old_pwd)

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   path_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/08 11:07:12 by enormand          #+#    #+#             */
+/*   Updated: 2025/04/08 11:07:13 by enormand         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
 char	*join_path(char *path, char *cmd)
@@ -49,14 +61,12 @@ char	*find_command_path(char *cmd, char **envp)
 
 	if (!cmd || !envp)
 		return (NULL);
-	// Handle absolute or relative paths
 	if (cmd[0] == '/' || cmd[0] == '.')
 	{
 		if (access(cmd, F_OK | X_OK) == 0)
 			return (ft_strdup(cmd));
 		return (NULL);
 	}
-	// Search in PATH directories
 	paths = get_paths(envp);
 	if (!paths)
 		return (NULL);

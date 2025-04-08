@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   command_split.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/08 11:07:21 by enormand          #+#    #+#             */
+/*   Updated: 2025/04/08 11:07:22 by enormand         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
 static char	**split_args(char *cmd, int start, int end)
@@ -169,7 +181,6 @@ static char	**process_redirections(t_command *cmd, char **args)
 	int		count;
 	int		error;
 
-	// First count how many non-redirection arguments we have
 	i = 0;
 	count = 0;
 	while (args[i])
@@ -188,11 +199,9 @@ static char	**process_redirections(t_command *cmd, char **args)
 		}
 		i++;
 	}
-	// Allocate new array for the filtered arguments
 	new_args = ft_calloc(count + 1, sizeof(char *));
 	if (!new_args)
 		return (NULL);
-	// Copy non-redirection arguments to new array
 	i = 0;
 	j = 0;
 	while (args[i])
@@ -210,12 +219,11 @@ static char	**process_redirections(t_command *cmd, char **args)
 		}
 		else if (args[i])
 		{
-			i++; // Skip redirection argument
+			i++;
 		}
 		i++;
 	}
 	new_args[j] = NULL;
-	// Now ft_gc_free the original args array and its contents
 	i = 0;
 	while (args[i])
 	{
@@ -235,12 +243,9 @@ t_pipeline	*split_command(char *cmd)
 	int			cmd_count;
 	int			current_quote;
 
-	// Création de la structure pipeline
 	pipeline = ft_calloc(1, sizeof(t_pipeline));
 	if (!pipeline)
 		return (NULL);
-	// Compte le nombre de commandes (nombre de pipes + 1)
-	// Ex: "cmd1 | cmd2 | cmd3" -> 2 pipes = 3 commandes
 	cmd_count = 1;
 	current_pos = 0;
 	current_quote = 0;
@@ -258,7 +263,6 @@ t_pipeline	*split_command(char *cmd)
 		}
 		current_pos++;
 	}
-	// Allocation du tableau de commandes
 	pipeline->commands = ft_calloc(cmd_count + 1, sizeof(t_command *));
 	pipeline->cmd_count = cmd_count;
 	if (!pipeline->commands)
@@ -266,7 +270,6 @@ t_pipeline	*split_command(char *cmd)
 		ft_gc_free(pipeline);
 		return (NULL);
 	}
-	// Parse chaque commande entre les pipes
 	current_pos = 0;
 	cmd_start = 0;
 	cmd_count = 0;
@@ -276,12 +279,10 @@ t_pipeline	*split_command(char *cmd)
 		if ((cmd[current_pos] == '|' && !current_quote) || cmd[current_pos
 			+ 1] == '\0')
 		{
-			// Parse les arguments de la commande actuelle
 			current_args = split_args(cmd, cmd_start, cmd[current_pos
 					+ 1] == '\0' ? current_pos + 1 : current_pos);
 			/* Debug*/
 			debug_str_list(current_args);
-			//*/
 			if (!current_args || !*current_args)
 			{
 				free_pipeline(pipeline);
@@ -294,7 +295,6 @@ t_pipeline	*split_command(char *cmd)
 				free_pipeline(pipeline);
 				return (NULL);
 			}
-			// Process redirections after command creation
 			pipeline->commands[cmd_count]->args = process_redirections(pipeline->commands[cmd_count],
 					current_args);
 			if (!pipeline->commands[cmd_count]->args)

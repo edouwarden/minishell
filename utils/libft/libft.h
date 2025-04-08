@@ -6,9 +6,10 @@
 /*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:16:19 by enormand          #+#    #+#             */
-/*   Updated: 2025/04/04 15:23:32 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/04/08 11:14:41 by enormand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #ifndef LIBFT_H
 # define LIBFT_H
 # include <stdlib.h>
@@ -28,10 +29,10 @@ typedef struct s_garbage
 	struct s_garbage	*next;
 }						t_garbage;
 
-// Garbage Collector functions
 void					*ft_gc_malloc(size_t size);
 void					ft_gc_free(void *ptr);
 void					ft_gc_cleanup(void);
+void					ft_gc_normal_free(void *ptr);
 
 char					*ft_strdup(const char *s1);
 char					*ft_itoa(long long n);

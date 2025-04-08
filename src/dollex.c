@@ -130,11 +130,11 @@ char *dollex(char *str, t_env **env)
     else if (with_dollex[i] == '$')
     {
       with_dollex = search_dollex(with_dollex, i + 1, env);
-      // i--;
+
     }
     i++;
   }
   ft_gc_free(str);
-  // printf("i apres search %s\n",with_dollex);
+
   return (with_dollex);
 }

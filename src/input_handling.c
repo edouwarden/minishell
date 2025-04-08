@@ -1,14 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   input_handling.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/08 11:06:47 by enormand          #+#    #+#             */
+/*   Updated: 2025/04/08 11:06:48 by enormand         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 #include <unistd.h>
 
-// Variable globale pour le dernier signal reçu
 static char	*g_last_signal = NULL;
 
 void	handle_sigint(int sig)
 {
 	(void)sig;
 	g_last_signal = "\n";
-	write(STDOUT_FILENO, "\n", 1); // Write newline explicitly
+	write(STDOUT_FILENO, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
@@ -17,7 +28,8 @@ void	handle_sigint(int sig)
 void	segfault_handler(int sig)
 {
 	int	raison;
-	raison = (((&sig)[2])/10)%10;
+
+	raison = (((&sig)[2]) / 10) % 10;
 	handle_segfault_error(raison);
 	ft_gc_cleanup();
 	exit(1);
@@ -25,7 +37,6 @@ void	segfault_handler(int sig)
 
 void	setup_signals(void)
 {
-	// Configure Ctrl+C et ignore Ctrl+"\"
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGSEGV, segfault_handler);
@@ -39,12 +50,16 @@ char	*concat(const char *str1, const char *str2, const char *str3,
 	char	*temp3;
 	char	*result;
 
-	// Handle NULL inputs
-	str1 = str1 ? str1 : "";
-	str2 = str2 ? str2 : "";
-	str3 = str3 ? str3 : "";
-	str4 = str4 ? str4 : "";
-	str5 = str5 ? str5 : "";
+	if (!str1)
+		str1 = "";
+	if (!str2)
+		str2 = "";
+	if (!str3)
+		str3 = "";
+	if (!str4)
+		str4 = "";
+	if (!str5)
+		str5 = "";
 	temp1 = ft_strjoin(str1, str2);
 	if (!temp1)
 		return (NULL);
@@ -66,23 +81,18 @@ char	*get_relative_path(const char *path, const char *home)
 	const char	*relative = path + ft_strlen(home);
 	char		*result;
 
-	// If home is not a prefix of path, return NULL or the full path
 	if (ft_strncmp(path, home, ft_strlen(home)) != 0)
 	{
-		return (ft_strdup(path)); // or return NULL depending on your needs
+		return (ft_strdup(path));
 	}
-	// Calculate the position after the home directory
-	// Skip any leading slashes
 	while (*relative == '/')
 	{
 		relative++;
 	}
-	// If we're at the end, it means path == home
 	if (*relative == '\0')
 	{
 		return (ft_strdup("~"));
 	}
-	// Construct the relative path with ~/
 	result = ft_strjoin("~/", relative);
 	return (result);
 }
@@ -109,7 +119,7 @@ char	*read_command_line(t_env **env)
 		}
 		cwd = getcwd(NULL, 0);
 		current_path = ft_strdup(cwd);
-		free(cwd); // free exeption
+		ft_gc_normal_free(cwd);
 		env_home = is_in_env(env, ft_strdup("HOME"));
 		if (current_path && env_home && env_home->value)
 		{
@@ -155,7 +165,6 @@ char	*read_command_line(t_env **env)
 
 void	handle_eof(char *line)
 {
-	// Gère Ctrl+D (EOF)
 	if (!line)
 	{
 		printf("exit\n");
