@@ -8,13 +8,16 @@ RM			=	rm -rf
 
 SRCS		=	src/main.c \
 				src/input_handling.c \
-				src/error_handler.c \
+				src/errors/error_handler.c \
+				src/errors/commands_errors.c \
+				src/errors/major_errors.c \
+				src/errors/parsing_errors.c \
 				src/parsing/command_split.c \
 				src/parsing/path_utils.c \
-				src/parsing/command_execution.c \
+				src/commands/builtin_execution.c \
 				src/parsing/pipeline_execution.c \
-				src/create.c \
-				src/dollex.c \
+				src/env/create.c \
+				src/parsing/dollex.c \
 				src/commands/echo.c \
 				src/commands/env.c \
 				src/commands/convert_env_to_array.c \
@@ -26,7 +29,12 @@ SRCS		=	src/main.c \
 				src/commands/pwd.c \
 				src/parsing/redirection.c \
 				src/commands/exit.c \
-				utils/ft_debug.c
+				utils/ft_debug.c \
+				src/parsing/args_split.c \
+				src/parsing/redirections/heredoc.c \
+				src/parsing/redirections/input.c \
+				src/parsing/redirections/output.c \
+				src/parsing/commands_utils.c
 
 OBJS		=	$(SRCS:.c=.o)
 

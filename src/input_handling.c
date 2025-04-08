@@ -6,12 +6,11 @@
 /*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:06:47 by enormand          #+#    #+#             */
-/*   Updated: 2025/04/08 11:06:48 by enormand         ###   ########.fr       */
+/*   Updated: 2025/04/08 13:45:59 by enormand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <unistd.h>
 
 static char	*g_last_signal = NULL;
 

@@ -6,7 +6,7 @@
 /*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 14:46:30 by enormand          #+#    #+#             */
-/*   Updated: 2025/04/04 17:55:33 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/04/08 13:31:56 by enormand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,6 @@
 # define STDOUT 1
 # define STDERR 2
 
-/*
-** Built-in Commands
-*/
 # define CMD_ECHO "echo"
 # define CMD_CD "cd"
 # define CMD_PWD "pwd"
@@ -41,9 +38,6 @@
 # define CMD_ENV "env"
 # define CMD_EXIT "exit"
 
-/*
-** Redirection Types
-*/
 # define REDIR_IN "<"
 # define REDIR_OUT ">"
 # define REDIR_HEREDOC "<<"
@@ -52,9 +46,7 @@
 # ifndef DEBUG
 #  define DEBUG 0
 # endif
-/*
-** Structures
-*/
+
 typedef struct s_command
 {
 	char		**args;
@@ -76,17 +68,11 @@ typedef struct s_pipeline
 	int			*pipe_fds;
 }				t_pipeline;
 
-/*
-** Function Prototypes
-*/
-
-/* Signal and input handling */
 void			setup_signals(void);
 void			handle_sigint(int sig);
 char			*read_command_line(t_env **env);
 void			handle_eof(char *line);
 
-/* Error handling and memory management */
 void			free_array(char **arr);
 void			handle_memory_error(void);
 void			handle_command_error(char *cmd);
@@ -99,24 +85,26 @@ void			handle_segfault_error(int raison);
 void			free_commands(t_command **commands, int count);
 void			free_pipeline(t_pipeline *pipeline);
 
-/* Command processing */
 t_pipeline		*split_command(char *cmd);
 t_command		*create_command(char **args);
 
-/* Command execution */
+char			**split_args(char *cmd, int start, int end);
+
 int				is_builtin(char *cmd);
 void			execute_builtin(char **args, t_env **env);
 void			execute_pipeline(t_pipeline *pipeline);
 
-/* Path handling */
 char			*find_command_path(char *cmd, char **env);
 char			**get_paths(char **env);
 char			*join_path(char *path, char *cmd);
+void			handle_quotes(char current_char, char *current_quote);
+int				count_pipes(char *cmd);
 
-/* Redirection handling */
+char			**process_redirections(t_command *cmd, char **args);
 int				handle_input_redirection(t_command *cmd);
 int				handle_output_redirection(t_command *cmd);
 int				handle_heredoc(t_command *cmd);
+void			cleanup_heredoc_file(void);
 void			cleanup_redirections(t_command *cmd);
 long long		get_exit_status(char **args, t_env **env);
 

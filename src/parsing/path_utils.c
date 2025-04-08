@@ -6,7 +6,7 @@
 /*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:07:12 by enormand          #+#    #+#             */
-/*   Updated: 2025/04/08 11:07:13 by enormand         ###   ########.fr       */
+/*   Updated: 2025/04/08 12:34:01 by enormand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,23 +53,11 @@ char	**get_paths(char **envp)
 	return (NULL);
 }
 
-char	*find_command_path(char *cmd, char **envp)
+static char	*check_each_path(char **paths, char *cmd)
 {
-	char	**paths;
 	char	*cmd_path;
 	int		i;
 
-	if (!cmd || !envp)
-		return (NULL);
-	if (cmd[0] == '/' || cmd[0] == '.')
-	{
-		if (access(cmd, F_OK | X_OK) == 0)
-			return (ft_strdup(cmd));
-		return (NULL);
-	}
-	paths = get_paths(envp);
-	if (!paths)
-		return (NULL);
 	i = 0;
 	while (paths[i])
 	{
@@ -84,4 +72,22 @@ char	*find_command_path(char *cmd, char **envp)
 	}
 	free_array(paths);
 	return (NULL);
+}
+
+char	*find_command_path(char *cmd, char **envp)
+{
+	char	**paths;
+
+	if (!cmd || !envp)
+		return (NULL);
+	if (cmd[0] == '/' || cmd[0] == '.')
+	{
+		if (access(cmd, F_OK | X_OK) == 0)
+			return (ft_strdup(cmd));
+		return (NULL);
+	}
+	paths = get_paths(envp);
+	if (!paths)
+		return (NULL);
+	return (check_each_path(paths, cmd));
 }

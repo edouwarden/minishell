@@ -6,103 +6,133 @@
 /*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:07:02 by enormand          #+#    #+#             */
-/*   Updated: 2025/04/08 11:07:03 by enormand         ###   ########.fr       */
+/*   Updated: 2025/04/08 12:41:16 by enormand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	cleanup_heredoc_file(void)
+static int	handle_redirection_token(t_command *cmd, char **args, int *i)
 {
-	unlink(".heredoc_tmp");
+	char	*token;
+	char	*next_arg;
+	int		has_error;
+	char	error_str[2];
+
+	has_error = 0;
+	token = args[*i];
+	next_arg = args[*i + 1];
+	error_str[0] = token[0];
+	error_str[1] = '\0';
+	if (!next_arg)
+	{
+		handle_newline_error();
+		return (1);
+	}
+	if (ft_strcmp(token, REDIR_IN) == 0)
+	{
+		if (cmd->input_file)
+			ft_gc_free(cmd->input_file);
+		cmd->input_file = ft_strdup(next_arg);
+	}
+	else if (ft_strcmp(token, REDIR_OUT) == 0)
+	{
+		if (cmd->output_file)
+			ft_gc_free(cmd->output_file);
+		cmd->output_file = ft_strdup(next_arg);
+		cmd->append_mode = 0;
+	}
+	else if (ft_strcmp(token, REDIR_HEREDOC) == 0)
+	{
+		if (cmd->heredoc_delim)
+			ft_gc_free(cmd->heredoc_delim);
+		cmd->heredoc_delim = ft_strdup(next_arg);
+	}
+	else if (ft_strcmp(token, REDIR_APPEND) == 0)
+	{
+		if (cmd->output_file)
+			ft_gc_free(cmd->output_file);
+		cmd->output_file = ft_strdup(next_arg);
+		cmd->append_mode = 1;
+	}
+	else
+	{
+		handle_parse_error(error_str);
+		return (1);
+	}
+	return (has_error);
 }
 
-int	handle_heredoc(t_command *cmd)
+static int	is_redirection_token(char *token)
 {
-	char	*line;
-	int		heredoc_fd;
-
-	if (!cmd->heredoc_delim)
-		return (0);
-	heredoc_fd = open(".heredoc_tmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (heredoc_fd == -1)
+	while (*token)
 	{
-		perror("minishell: heredoc");
-		return (-1);
+		if (*token != '<' && *token != '>')
+			return (0);
+		token++;
 	}
-	while (1)
+	return (1);
+}
+
+char	**process_redirections(t_command *cmd, char **args)
+{
+	char	**new_args;
+	int		i;
+	int		j;
+	int		count;
+	int		error;
+
+	i = 0;
+	count = 0;
+	while (args[i])
 	{
-		line = readline("> ");
-		if (!line)
-			break ;
-		if (ft_strcmp(line, cmd->heredoc_delim) == 0)
+		if (!is_redirection_token(args[i]))
 		{
-			ft_gc_free(line);
-			break ;
+			count++;
 		}
-		if (write(heredoc_fd, line, ft_strlen(line)) == -1 || write(heredoc_fd,
-				"\n", 1) == -1)
-		{
-			perror("minishell: heredoc write");
-			ft_gc_free(line);
-			close(heredoc_fd);
-			return (-1);
-		}
-		ft_gc_free(line);
-	}
-	close(heredoc_fd);
-	if (cmd->input_file)
-		ft_gc_free(cmd->input_file);
-	cmd->input_file = ft_strdup(".heredoc_tmp");
-	if (!cmd->input_file)
-	{
-		perror("minishell: memory allocation failed");
-		return (-1);
-	}
-	return (0);
-}
-
-int	handle_input_redirection(t_command *cmd)
-{
-	if (!cmd->input_file)
-		return (0);
-	if (cmd->input_fd != STDIN)
-		close(cmd->input_fd);
-	cmd->input_fd = open(cmd->input_file, O_RDONLY);
-	if (cmd->input_fd == -1)
-	{
-		ft_putstr_fd("minishell: ", STDERR);
-		ft_putstr_fd(cmd->input_file, STDERR);
-		ft_putstr_fd(": No such file or directory\n", STDERR);
-		return (-1);
-	}
-	if (cmd->input_file && ft_strcmp(cmd->input_file, ".heredoc_tmp") == 0)
-		cleanup_heredoc_file();
-	return (0);
-}
-
-int	handle_output_redirection(t_command *cmd)
-{
-	int	flags;
-
-	if (!cmd->output_file)
-		return (0);
-	if (cmd->output_fd != STDOUT)
-		close(cmd->output_fd);
-	flags = O_WRONLY | O_CREAT;
-	flags |= cmd->append_mode ? O_APPEND : O_TRUNC;
-	cmd->output_fd = open(cmd->output_file, flags, 0644);
-	if (cmd->output_fd == -1)
-	{
-		ft_putstr_fd("minishell: ", STDERR);
-		ft_putstr_fd(cmd->output_file, STDERR);
-		if (errno == EACCES)
-			ft_putstr_fd(": Permission denied\n", STDERR);
 		else
-			ft_putstr_fd(": Error opening file\n", STDERR);
-		return (-1);
+		{
+			error = handle_redirection_token(cmd, args, &i);
+			if (error)
+				return (NULL);
+			i++;
+			continue ;
+		}
+		i++;
 	}
-	return (0);
+	new_args = ft_calloc(count + 1, sizeof(char *));
+	if (!new_args)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (args[i])
+	{
+		if (args[i] && !is_redirection_token(args[i]))
+		{
+			new_args[j++] = ft_strdup(args[i]);
+			if (!new_args[j - 1])
+			{
+				while (--j >= 0)
+					ft_gc_free(new_args[j]);
+				ft_gc_free(new_args);
+				return (NULL);
+			}
+		}
+		else if (args[i])
+		{
+			i++;
+		}
+		i++;
+	}
+	new_args[j] = NULL;
+	i = 0;
+	while (args[i])
+	{
+		ft_gc_free(args[i]);
+		i++;
+	}
+	ft_gc_free(args);
+	return (new_args);
 }
 
 void	cleanup_redirections(t_command *cmd)
