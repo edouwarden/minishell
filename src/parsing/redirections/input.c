@@ -6,7 +6,7 @@
 /*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:37:37 by enormand          #+#    #+#             */
-/*   Updated: 2025/04/08 12:43:25 by enormand         ###   ########.fr       */
+/*   Updated: 2025/04/09 10:36:56 by enormand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ int	handle_input_redirection(t_command *cmd)
 	cmd->input_fd = open(cmd->input_file, O_RDONLY);
 	if (cmd->input_fd == -1)
 	{
-		ft_putstr_fd("minishell: ", STDERR);
-		ft_putstr_fd(cmd->input_file, STDERR);
-		ft_putstr_fd(": No such file or directory\n", STDERR);
+		print_not_found_errors(cmd->input_file);
 		return (-1);
 	}
 	if (cmd->input_file && ft_strcmp(cmd->input_file, ".heredoc_tmp") == 0)

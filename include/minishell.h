@@ -6,7 +6,7 @@
 /*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 14:46:30 by enormand          #+#    #+#             */
-/*   Updated: 2025/04/08 13:31:56 by enormand         ###   ########.fr       */
+/*   Updated: 2025/04/09 12:07:20 by enormand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,17 @@ char			*read_command_line(t_env **env);
 void			handle_eof(char *line);
 
 void			free_array(char **arr);
-void			handle_memory_error(void);
-void			handle_command_error(char *cmd);
-void			handle_parse_error(char *c);
-void			handle_exit_error(char *arg);
-void			handle_newline_error(void);
-void			handle_non_numeric_arg_error(char *arg);
-void			handle_too_many_args_error(void);
-void			handle_segfault_error(int raison);
+void			print_memory_error(void);
+void			print_command_error(char *cmd);
+void			print_parse_error(char *c);
+void			print_exit_error(char *arg);
+void			print_newline_error(void);
+void			print_non_numeric_arg_error(char *arg);
+void			print_too_many_args_error(void);
+void			print_permission_errors(char *str);
+void			print_segfault_error(int raison);
+void			print_not_found_errors(char *file);
+void			print_open_error(char *file, int errno);
 void			free_commands(t_command **commands, int count);
 void			free_pipeline(t_pipeline *pipeline);
 

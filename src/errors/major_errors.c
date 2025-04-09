@@ -6,13 +6,13 @@
 /*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 13:50:55 by enormand          #+#    #+#             */
-/*   Updated: 2025/04/08 14:06:39 by enormand         ###   ########.fr       */
+/*   Updated: 2025/04/09 10:29:38 by enormand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	handle_memory_error(void)
+void	print_memory_error(void)
 {
 	ft_putstr_fd("\033[0;31m❌ minishell: memory allocation error\033[0m\n",
 		STDERR);
@@ -20,19 +20,19 @@ void	handle_memory_error(void)
 	exit(EXIT_FAILURE);
 }
 
-void	handle_command_error(char *cmd)
+void	print_command_error(char *cmd)
 {
 	ft_putstr_fd("\033[0;31m❌ minishell: ", STDERR);
 	ft_putstr_fd(cmd, STDERR);
 	ft_putstr_fd(": command not found\033[0m\n", STDERR);
 }
 
-void	handle_file_error(void)
+void	print_file_error(void)
 {
 	ft_putstr_fd("\033[0;31m❌ minishell: file error\033[0m\n", STDERR);
 }
 
-void	handle_segfault_error(int raison)
+void	print_segfault_error(int raison)
 {
 	printf("\nSegmentation fault (SIGSEGV) reçu !\n");
 	if (raison == 0)

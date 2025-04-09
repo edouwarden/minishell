@@ -6,7 +6,7 @@
 /*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:07:02 by enormand          #+#    #+#             */
-/*   Updated: 2025/04/08 12:41:16 by enormand         ###   ########.fr       */
+/*   Updated: 2025/04/09 10:29:38 by enormand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	handle_redirection_token(t_command *cmd, char **args, int *i)
 	error_str[1] = '\0';
 	if (!next_arg)
 	{
-		handle_newline_error();
+		print_newline_error();
 		return (1);
 	}
 	if (ft_strcmp(token, REDIR_IN) == 0)
@@ -57,7 +57,7 @@ static int	handle_redirection_token(t_command *cmd, char **args, int *i)
 	}
 	else
 	{
-		handle_parse_error(error_str);
+		print_parse_error(error_str);
 		return (1);
 	}
 	return (has_error);

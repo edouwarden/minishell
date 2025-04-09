@@ -6,7 +6,7 @@
 /*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:45:26 by enormand          #+#    #+#             */
-/*   Updated: 2024/03/05 15:45:26 by enormand         ###   ########.fr       */
+/*   Updated: 2025/04/09 11:56:42 by enormand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	setup_pipes(t_pipeline *pipeline)
 	number_of_pipes = pipeline->cmd_count - 1;
 	pipeline->pipe_fds = ft_calloc(number_of_pipes * 2, sizeof(int));
 	if (!pipeline->pipe_fds)
-		handle_memory_error();
+		print_memory_error();
 	pipe_index = 0;
 	while (pipe_index < number_of_pipes)
 	{
@@ -40,11 +40,11 @@ static void	setup_command_pipes(t_pipeline *pipeline)
 	int	cmd_index;
 
 	cmd_index = 0;
-	debug_printf("%d", pipeline->cmd_count);
-	debug_printf("%d", pipeline->commands[cmd_index]->pipe_read);
-	debug_printf("%d", pipeline->commands[cmd_index]->pipe_write);
-	debug_printf("%d", pipeline->pipe_fds[(cmd_index - 1) * 2]);
-	debug_printf("%d", pipeline->pipe_fds[cmd_index * 2 + 1]);
+	debug_printf("pipeline, cmd_count: %d", pipeline->cmd_count);
+	debug_printf("pipeline, first command, pipe read: %d", pipeline->commands[cmd_index]->pipe_read);
+	debug_printf("pipeline, first command, pipe write: %d", pipeline->commands[cmd_index]->pipe_write);
+	debug_printf("pipeline, first command, pipe fds in: %d", pipeline->pipe_fds[(cmd_index - 1) * 2]);
+	debug_printf("pipeline, first command, pipe fds out: %d", pipeline->pipe_fds[cmd_index * 2 + 1]);
 	while (cmd_index < pipeline->cmd_count)
 	{
 		if (cmd_index > 0)
@@ -153,9 +153,7 @@ static void	execute_piped_command(t_command *cmd, t_env **envp)
 		{
 			if (access(cmd->args[0], X_OK) == -1)
 			{
-				ft_putstr_fd("minishell: ", STDERR);
-				ft_putstr_fd(cmd->args[0], STDERR);
-				ft_putstr_fd(": Permission denied\n", STDERR);
+				print_permission_errors(cmd->args[0]);
 				free_array(env);
 				cleanup_redirections(cmd);
 				ft_gc_cleanup();
@@ -165,7 +163,7 @@ static void	execute_piped_command(t_command *cmd, t_env **envp)
 		}
 		else
 		{
-			handle_command_error(cmd->args[0]);
+			print_command_error(cmd->args[0]);
 			free_array(env);
 			cleanup_redirections(cmd);
 			ft_gc_cleanup();
@@ -177,7 +175,7 @@ static void	execute_piped_command(t_command *cmd, t_env **envp)
 		command_path = find_command_path(cmd->args[0], env);
 		if (!command_path)
 		{
-			handle_command_error(cmd->args[0]);
+			print_command_error(cmd->args[0]);
 			free_array(env);
 			cleanup_redirections(cmd);
 			ft_gc_cleanup();
@@ -234,7 +232,7 @@ void	execute_pipeline(t_pipeline *pipeline)
 	setup_command_pipes(pipeline);
 	child_pids = ft_calloc(pipeline->cmd_count, sizeof(pid_t));
 	if (!child_pids)
-		handle_memory_error();
+		print_memory_error();
 	cmd_index = 0;
 	while (cmd_index < pipeline->cmd_count)
 	{

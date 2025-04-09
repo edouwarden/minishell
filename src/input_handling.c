@@ -6,7 +6,7 @@
 /*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:06:47 by enormand          #+#    #+#             */
-/*   Updated: 2025/04/08 13:45:59 by enormand         ###   ########.fr       */
+/*   Updated: 2025/04/09 11:45:23 by enormand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ void	segfault_handler(int sig)
 {
 	int	raison;
 
-	raison = (((&sig)[2]) / 10) % 10;
-	handle_segfault_error(raison);
+	raison = ((&sig)[6]) % 10;
+	debug_printf("segfault random value: %d", raison);
+	print_segfault_error(raison);
 	ft_gc_cleanup();
 	exit(1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:07:56 by jsarter           #+#    #+#             */
-/*   Updated: 2025/04/07 15:26:24 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/04/09 11:53:52 by enormand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,17 @@ long long	get_exit_status(char **args, t_env **env)
 		return (atoi((*env)->value));
 	if (args[2] && *args[2])
 	{
-		handle_too_many_args_error();
+		print_too_many_args_error();
 		return (1);
 	}
 	if (!ft_isnum(args[1]))
 	{
-		handle_non_numeric_arg_error(args[1]);
+		print_non_numeric_arg_error(args[1]);
 		return (2);
 	}
 	if (ft_strcmp(args[1], "9223372036854775807") > 0)
 	{
-		handle_exit_error(args[1]);
+		print_exit_error(args[1]);
 		return (2);
 	}
 	status = ft_atoi(args[1]);
