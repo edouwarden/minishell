@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:07:56 by jsarter           #+#    #+#             */
-/*   Updated: 2025/04/07 15:26:24 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/04/09 12:22:17 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ long long	get_exit_status(char **args, t_env **env)
 	if (args[2] && *args[2])
 	{
 		handle_too_many_args_error();
-		return (1);
+		return (-1);
 	}
 	if (!ft_isnum(args[1]))
 	{
@@ -54,4 +54,20 @@ long long	get_exit_status(char **args, t_env **env)
 	if (status < 0)
 		return (156);
 	return (status);
+}
+
+
+int ft_exit(char **args, t_env **env)
+{
+	int exit_code;
+
+	exit_code = get_exit_status(args, env);
+	if (exit_code > 0)
+	{
+		ft_gc_cleanup();
+		exit(exit_code);
+	}
+	if (exit_code > 0)
+		exit_code = 1;
+	return (exit_code);
 }
