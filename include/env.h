@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:18:57 by jsarter           #+#    #+#             */
-/*   Updated: 2025/04/04 17:47:03 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/04/09 11:05:44 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_env				*is_in_env(t_env **env, char *name);
 int					ft_export(char **v, t_env **env);
 void				ft_strncpy(char *src, char *dest, int n);
 
-int					print_env(t_env **lst);
+int					print_env(char **argv, t_env **lst);
 char				*get_n(char *env);
 char				*get_v(char *env);
 t_env				*ft_lstlast(t_env *env);

@@ -40,7 +40,7 @@ void	execute_builtin(char **args, t_env **env)
 	else if (!ft_strcmp(args[0], CMD_UNSET))
 		value = ft_unset(args, env);
 	else if (!ft_strcmp(args[0], CMD_ENV))
-		value = print_env(env);
+		value = print_env(args, env);
 	else if (!ft_strcmp(args[0], CMD_EXIT))
 	{
 		exit_code = get_exit_status(args, env);

@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 12:22:51 by jsarter           #+#    #+#             */
-/*   Updated: 2025/04/07 15:48:10 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/04/09 11:12:56 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	ft_export(char **v, t_env **env)
 
 	c = get_c(v);
 	if (c == 1)
-		print_env(env);
+		print_env(v, env);
 	if (check_args(v, c))
 		return (1);
 	i = 1;

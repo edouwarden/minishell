@@ -57,54 +57,6 @@ static void	setup_command_pipes(t_pipeline *pipeline)
 	}
 }
 
-char	**env_list_to_array(t_env *env)
-{
-	int		len;
-	t_env	*current;
-	char	**array;
-	int		i;
-	size_t	total_len;
-	char	*str;
-
-	len = 0;
-	current = env;
-	while (current != NULL)
-	{
-		if (current->name != NULL && current->value != NULL)
-		{
-			len++;
-		}
-		current = current->next;
-	}
-	array = ft_calloc(len + 1, sizeof(char *));
-	if (!array)
-		return (NULL);
-	current = env;
-	i = 0;
-	while (current != NULL)
-	{
-		if (current->name == NULL || current->value == NULL)
-		{
-			current = current->next;
-			continue ;
-		}
-		total_len = ft_strlen(current->name) + ft_strlen(current->value) + 2;
-		str = ft_calloc(total_len, sizeof(char *));
-		if (!str)
-		{
-			while (i-- > 0)
-				ft_gc_free(array[i]);
-			ft_gc_free(array);
-			return (NULL);
-		}
-		snprintf(str, total_len, "%s=%s", current->name, current->value);
-		array[i++] = str;
-		current = current->next;
-	}
-	array[i] = NULL;
-	return (array);
-}
-
 static void	execute_piped_command(t_command *cmd, t_env **envp)
 {
 	char	*command_path;
@@ -187,7 +139,7 @@ static void	execute_piped_command(t_command *cmd, t_env **envp)
 		ft_gc_cleanup();
 		exit(status);
 	}
-	env = env_list_to_array(*envp);
+	env = convert_env_to_array(envp);
 	if (!env)
 	{
 		perror("Failed to create environment array");

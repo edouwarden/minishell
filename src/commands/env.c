@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 12:01:26 by jsarter           #+#    #+#             */
-/*   Updated: 2025/04/07 15:21:53 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/04/09 11:04:07 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,17 @@ void	update_last_value(t_env **env, long int value)
 	(*env)->value = str_value;
 }
 
-int	print_env(t_env **lst)
+int	print_env(char **argv, t_env **lst)
 {
 	t_env	*ptr;
+	int		c;
 
+	c = get_c(argv);
+	if (c != 1)
+	{
+		printf("env: ‘%s’: No such file or directory\n", argv[1]);
+		return (127);
+	}
 	ptr = (*lst)->next;
 	while (ptr)
 	{
