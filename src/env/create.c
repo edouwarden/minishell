@@ -6,63 +6,14 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 15:00:33 by jsarter           #+#    #+#             */
-/*   Updated: 2025/03/31 15:42:45 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/04/09 11:26:32 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/env.h"
 #include "../../include/minishell.h"
 
-void	add_back_env(t_env *new_env, t_env **lst)
-{
-	t_env	*ptr;
-
-	if (!lst || !new_env)
-	{
-		*lst = new_env;
-		return ;
-	}
-	ptr = ft_lstlast(*lst);
-	if (!ptr)
-	{
-		*lst = new_env;
-		return ;
-	}
-	ptr->next = new_env;
-	new_env->next = NULL;
-}
-
-void	add_front_env(t_env *node, t_env **list)
-{
-	if (!node)
-		return ;
-	if (list)
-		node->next = *list;
-	*list = node;
-}
-
-t_env	*new_env(char *n, char *v)
-{
-	t_env	*new_node;
-
-	new_node = (t_env *)ft_calloc(1, sizeof(t_env));
-	if (!n || !v || !new_node)
-	{
-		if (n)
-			ft_gc_free(n);
-		if (v)
-			ft_gc_free(v);
-		if (new_node)
-			ft_gc_free(new_node);
-		return (NULL);
-	}
-	new_node->name = n;
-	new_node->value = v;
-	new_node->next = NULL;
-	return (new_node);
-}
-
-void	env_clear(t_env **lst)
+t_env	**env_clear(t_env **lst)
 {
 	t_env	*suiv;
 	t_env	*prev;
@@ -78,6 +29,7 @@ void	env_clear(t_env **lst)
 		prev = suiv;
 	}
 	ft_gc_free(lst);
+	return (NULL);
 }
 
 void	handle_shell_level(t_env **env)
@@ -124,6 +76,15 @@ t_env	**remember_no_env(t_env **env)
 	return (env);
 }
 
+void	some_more_changes(t_env **env)
+{
+	t_env	*tmp;
+
+	tmp = new_env(ft_strdup("LAST_RESULT"), ft_strdup("0"));
+	add_front_env(tmp, env);
+	handle_shell_level(env);
+}
+
 t_env	**create_env(void)
 {
 	int		i;
@@ -144,15 +105,10 @@ t_env	**create_env(void)
 	{
 		tmp = new_env(get_n(envp[i]), get_v(envp[i]));
 		if (!tmp)
-		{
-			env_clear(list);
-			return (NULL);
-		}
+			return (env_clear(list));
 		add_back_env(tmp, list);
 		i++;
 	}
-	tmp = new_env(ft_strdup("LAST_RESULT"), ft_strdup("0"));
-	add_front_env(tmp, list);
-	handle_shell_level(list);
+	some_more_changes(list);
 	return (list);
 }

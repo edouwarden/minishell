@@ -17,6 +17,7 @@ SRCS		=	src/main.c \
 				src/commands/builtin_execution.c \
 				src/parsing/pipeline_execution.c \
 				src/env/create.c \
+				src/env/env_manipulation.c \
 				src/parsing/dollex.c \
 				src/commands/echo.c \
 				src/commands/env.c \
