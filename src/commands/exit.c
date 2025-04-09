@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:07:56 by jsarter           #+#    #+#             */
-/*   Updated: 2025/04/09 12:22:17 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/04/09 12:47:40 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,12 @@ int ft_exit(char **args, t_env **env)
 	int exit_code;
 
 	exit_code = get_exit_status(args, env);
-	if (exit_code > 0)
+	if (exit_code >= 0)
 	{
 		ft_gc_cleanup();
 		exit(exit_code);
 	}
-	if (exit_code > 0)
+	if (exit_code < 0)
 		exit_code = 1;
 	return (exit_code);
 }
