@@ -6,12 +6,24 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 15:00:33 by jsarter           #+#    #+#             */
-/*   Updated: 2025/04/09 11:18:49 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/04/09 12:01:01 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/env.h"
 #include "../../include/minishell.h"
+
+t_env	**need_env(t_env ** env)
+{
+	static t_env** backup;
+
+	if (env)
+	{
+		backup = env;
+		return (backup);
+	}
+	return (backup);
+}
 
 void	add_back_env(t_env *new_env, t_env **lst)
 {

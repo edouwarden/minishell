@@ -9,19 +9,23 @@
 /*   Updated: 2025/04/08 13:45:59 by enormand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+#include "../include/env.h"
 #include "../include/minishell.h"
 
 static char	*g_last_signal = NULL;
 
 void	handle_sigint(int sig)
 {
+	t_env	**env;
+
 	(void)sig;
 	g_last_signal = "\n";
 	write(STDOUT_FILENO, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
+	env = need_env(NULL);
+	update_last_value(env, 130);
 }
 
 void	segfault_handler(int sig)
