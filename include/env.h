@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:18:57 by jsarter           #+#    #+#             */
-/*   Updated: 2025/04/09 11:29:25 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/04/09 11:45:37 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,9 @@ void				free_array_env(char **array);
 void				add_front_env(t_env *node, t_env **list);
 t_env				*new_env(char *n, char *v);
 void				add_back_env(t_env *new_env, t_env **lst);
+char				*search_dollex(char *str, int i, t_env **env);
+char				*is_in_env_bis(char *var, t_env **env);
+int					is_stop(char c);
+char				*add_final(int i, int len_name, char *str, char *value);
 
 #endif

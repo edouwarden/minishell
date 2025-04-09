@@ -19,6 +19,7 @@ SRCS		=	src/main.c \
 				src/env/create.c \
 				src/env/env_manipulation.c \
 				src/parsing/dollex.c \
+				src/parsing/searching_things.c \
 				src/commands/echo.c \
 				src/commands/env.c \
 				src/commands/convert_env_to_array.c \
