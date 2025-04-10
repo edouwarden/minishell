@@ -23,8 +23,7 @@ int	is_builtin(char *cmd)
 
 void	execute_builtin(char **args, t_env **env)
 {
-	int	value;
-	int	exit_code;
+	int	long long value;
 
 	if (!args || !args[0])
 		return ;
@@ -42,10 +41,6 @@ void	execute_builtin(char **args, t_env **env)
 	else if (!ft_strcmp(args[0], CMD_ENV))
 		value = print_env(args, env);
 	else if (!ft_strcmp(args[0], CMD_EXIT))
-	{
-		exit_code = get_exit_status(args, env);
-		ft_gc_cleanup();
-		exit(exit_code);
-	}
+		value = ft_exit(args, env);
 	update_last_value(env, value);
 }
