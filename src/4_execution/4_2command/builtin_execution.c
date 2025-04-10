@@ -23,7 +23,7 @@ int	is_builtin(char *cmd)
 
 void	execute_builtin(char **args, t_env **env)
 {
-	int	long long value;
+	int long long	value;
 
 	if (!args || !args[0])
 		return ;

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../../../include/minishell.h"
 
 int	handle_input_redirection(t_command *cmd)
 {

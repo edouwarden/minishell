@@ -31,12 +31,12 @@ void	print_non_numeric_arg_error(char *arg)
 	ft_putstr_fd(": numeric argument required\033[0m\n", STDERR);
 }
 
-void	print_open_error(char *file, int errno)
+void	print_open_error(char *file, int error_code)
 {
-	ft_putstr_fd("minishell: ", STDERR);
+	ft_putstr_fd("\033[0;31m❌ minishell: ", STDERR);
 	ft_putstr_fd(file, STDERR);
-	if (errno == EACCES)
-		ft_putstr_fd(": Permission denied\n", STDERR);
+	if (error_code == EACCES)
+		ft_putstr_fd(": Permission denied\033[0m\n", STDERR);
 	else
-		ft_putstr_fd(": Error opening file\n", STDERR);
+		ft_putstr_fd(": Error opening file\033[0m\n", STDERR);
 }

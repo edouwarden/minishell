@@ -14,21 +14,17 @@
 # define MINISHELL_H
 
 # include "../utils/libft/libft.h"
+# include "commands.h"
 # include "env.h"
+# include "input.h"
+# include "redirections.h"
+# include "utils.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
 # include <sys/wait.h>
-# include <unistd.h>
-
-# define STDIN 0
-# define STDOUT 1
-# define STDERR 2
 
 # define CMD_ECHO "echo"
 # define CMD_CD "cd"
@@ -38,80 +34,18 @@
 # define CMD_ENV "env"
 # define CMD_EXIT "exit"
 
-# define REDIR_IN "<"
-# define REDIR_OUT ">"
-# define REDIR_HEREDOC "<<"
-# define REDIR_APPEND ">>"
+// Exit status
+long long	get_exit_status(char **args, t_env **env);
 
-# ifndef DEBUG
-#  define DEBUG 0
-# endif
+// Pipeline execution
+void		execute_pipeline(t_pipeline *pipeline);
+void		execute_piped_command(t_command *cmd, t_env **envp);
+void		handle_builtin_single_command(t_pipeline *pipeline);
+void		wait_for_children(pid_t *child_pids, int cmd_count, t_env **env);
 
-typedef struct s_command
-{
-	char		**args;
-	int			pipe_read;
-	int			pipe_write;
-	int			input_fd;
-	int			output_fd;
-	char		*input_file;
-	char		*output_file;
-	char		*heredoc_delim;
-	int			append_mode;
-}				t_command;
-
-typedef struct s_pipeline
-{
-	t_command	**commands;
-	int			cmd_count;
-	t_env		**env;
-	int			*pipe_fds;
-}				t_pipeline;
-
-void			setup_signals(void);
-void			handle_sigint(int sig);
-char			*read_command_line(t_env **env);
-void			handle_eof(char *line);
-
-void			free_array(char **arr);
-void			print_memory_error(void);
-void			print_command_error(char *cmd);
-void			print_parse_error(char *c);
-void			print_exit_error(char *arg);
-void			print_newline_error(void);
-void			print_non_numeric_arg_error(char *arg);
-void			print_too_many_args_error(void);
-void			print_permission_errors(char *str);
-void			print_segfault_error(int raison);
-void			print_not_found_errors(char *file);
-void			print_open_error(char *file, int errno);
-void			free_commands(t_command **commands, int count);
-void			free_pipeline(t_pipeline *pipeline);
-
-t_pipeline		*split_command(char *cmd);
-t_command		*create_command(char **args);
-
-char			**split_args(char *cmd, int start, int end);
-
-int				is_builtin(char *cmd);
-void			execute_builtin(char **args, t_env **env);
-void			execute_pipeline(t_pipeline *pipeline);
-
-char			*find_command_path(char *cmd, char **env);
-char			**get_paths(char **env);
-char			*join_path(char *path, char *cmd);
-void			handle_quotes(char current_char, char *current_quote);
-int				count_pipes(char *cmd);
-
-char			**process_redirections(t_command *cmd, char **args);
-int				handle_input_redirection(t_command *cmd);
-int				handle_output_redirection(t_command *cmd);
-int				handle_heredoc(t_command *cmd);
-void			cleanup_heredoc_file(void);
-void			cleanup_redirections(t_command *cmd);
-long long		get_exit_status(char **args, t_env **env);
-
-void			debug_str_list(char **str);
-void			debug_printf(const char *format, ...);
+// Redirections
+void		handle_pipe_redirections(t_command *cmd);
+void		handle_file_redirections(t_command *cmd);
+void		handle_redirections(t_command *cmd);
 
 #endif

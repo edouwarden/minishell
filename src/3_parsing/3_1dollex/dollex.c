@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/env.h"
-#include "../../include/minishell.h"
+#include "../../../include/env.h"
+#include "../../../include/minishell.h"
 
 char	*add_final(int i, int len_name, char *str, char *value)
 {

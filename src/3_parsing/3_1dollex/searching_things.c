@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/env.h"
-#include "../../include/minishell.h"
+#include "../../../include/env.h"
+#include "../../../include/minishell.h"
 
 int	is_stop(char c)
 {

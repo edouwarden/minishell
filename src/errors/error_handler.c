@@ -16,7 +16,7 @@ void	free_array(char **arr)
 {
 	int	i;
 
-	if (!arr)
+	if (!arr || !*arr)
 		return ;
 	i = 0;
 	while (arr[i])

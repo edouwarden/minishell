@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../../../include/minishell.h"
 
 void	cleanup_heredoc_file(void)
 {

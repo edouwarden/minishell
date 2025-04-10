@@ -56,14 +56,14 @@ void	ft_gc_free(void *ptr)
 				prev->next = current->next;
 			else
 				*get_garbage() = current->next;
-			free(current->ptr);
+			free(ptr);
 			free(current);
 			return ;
 		}
 		prev = current;
 		current = current->next;
 	}
-	free(ptr);
+	//free(ptr);
 }
 
 void	ft_gc_normal_free(void *ptr)

@@ -59,7 +59,7 @@ char				*search_dollex(char *str, int i, t_env **env);
 char				*is_in_env_bis(char *var, t_env **env);
 int					is_stop(char c);
 char				*add_final(int i, int len_name, char *str, char *value);
-t_env				**need_env(t_env ** env);
+t_env				**need_env(t_env **env);
 int					ft_exit(char **args, t_env **env);
 
 #endif

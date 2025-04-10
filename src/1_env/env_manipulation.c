@@ -13,9 +13,9 @@
 #include "../../include/env.h"
 #include "../../include/minishell.h"
 
-t_env	**need_env(t_env ** env)
+t_env	**need_env(t_env **env)
 {
-	static t_env** backup;
+	static t_env	**backup;
 
 	if (env)
 	{

@@ -10,13 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../../include/minishell.h"
 
-static int	handle_redirections(char *cmd, int *current_pos, char current_quote)
+static int	handle_redirection_symbols(char *cmd, int *current_pos,
+		char current_quote)
 {
-	if (!current_quote && (cmd[*current_pos] == '<' \
-		|| cmd[*current_pos] == '>') && cmd[*current_pos + 1] != '<' \
-	&& cmd[*current_pos + 1] != '>')
+	if (!current_quote && (cmd[*current_pos] == '<' || cmd[*current_pos] == '>')
+		&& cmd[*current_pos + 1] != '<' && cmd[*current_pos + 1] != '>')
 	{
 		(*current_pos)++;
 		return (1);
@@ -63,7 +63,7 @@ static int	process_arg(char *cmd, int *current_pos, char ***args,
 			|| cmd[*current_pos] != ' '))
 	{
 		handle_quotes(cmd[*current_pos], &current_quote);
-		if (handle_redirections(cmd, current_pos, current_quote))
+		if (handle_redirection_symbols(cmd, current_pos, current_quote))
 			break ;
 		(*current_pos)++;
 	}

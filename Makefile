@@ -7,38 +7,46 @@ DEBUG_FLAG	=
 RM			=	rm -rf
 
 SRCS		=	src/main.c \
-				src/input_handling.c \
+				src/1_env/create.c \
+				src/1_env/env_manipulation.c \
+				src/2_input/input_handling.c \
+				src/2_input/signal_handling.c \
+				src/2_input/string_utils.c \
+				src/3_parsing/3_1dollex/dollex.c \
+				src/3_parsing/3_1dollex/searching_things.c \
+				src/3_parsing/3_2split_command/command_split.c \
+				src/3_parsing/3_2split_command/redirection.c \
+				src/3_parsing/3_2split_command/redirection_tokens.c \
+				src/3_parsing/3_2split_command/redirection_utils.c \
+				src/3_parsing/3_3split_args/args_split.c \
+				src/3_parsing/commands_utils.c \
+				src/4_execution/4_1pipeline/pipeline_process.c \
+				src/4_execution/4_1pipeline/pipeline_setup.c \
+				src/4_execution/4_2command/builtin_execution.c \
+				src/4_execution/4_2command/command_execution.c \
+				src/4_execution/4_2command/command_redirections.c \
+				src/4_execution/4_2command/convert_env_to_array.c \
+				src/4_execution/4_2command/path_utils.c \
+				src/4_execution/4_2command/redirections/heredoc.c \
+				src/4_execution/4_2command/redirections/input.c \
+				src/4_execution/4_2command/redirections/output.c \
+				src/5_builtins/cd.c \
+				src/5_builtins/echo.c \
+				src/5_builtins/env.c \
+				src/5_builtins/export.c \
+				src/5_builtins/exit.c \
+				src/5_builtins/pwd.c \
+				src/5_builtins/unset.c \
 				src/errors/error_handler.c \
 				src/errors/commands_errors.c \
 				src/errors/major_errors.c \
 				src/errors/parsing_errors.c \
-				src/parsing/command_split.c \
-				src/parsing/path_utils.c \
-				src/commands/builtin_execution.c \
-				src/parsing/pipeline_execution.c \
-				src/env/create.c \
-				src/env/env_manipulation.c \
-				src/parsing/dollex.c \
-				src/parsing/searching_things.c \
-				src/commands/echo.c \
-				src/commands/env.c \
-				src/commands/convert_env_to_array.c \
-				src/commands/export.c \
-				utils/ft_lstlast.c \
-				src/commands/unset.c \
-				utils/utils.c \
-				src/commands/cd.c \
-				src/commands/pwd.c \
-				src/parsing/redirection.c \
-				src/commands/exit.c \
 				utils/ft_debug.c \
-				src/parsing/args_split.c \
-				src/parsing/redirections/heredoc.c \
-				src/parsing/redirections/input.c \
-				src/parsing/redirections/output.c \
-				src/parsing/commands_utils.c
+				utils/ft_lstlast.c \
+				utils/utils.c 
 
-OBJS		=	$(SRCS:.c=.o)
+OBJ_DIR		=	obj
+OBJS		=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
 
 # Libft
 LIBFT_DIR	=	utils/libft/
@@ -63,7 +71,7 @@ FILL_CHAR := \#
 EMPTY_CHAR := -
 
 # Function to count already compiled files
-COUNT_COMPILED = $(shell ls $(OBJS) 2>/dev/null | wc -l | tr -d ' ')
+COUNT_COMPILED = $(shell find $(OBJ_DIR) -name "*.o" 2>/dev/null | wc -l | tr -d ' ')
 
 define print_progress
 	$(eval COMPILED=$(shell echo $$(($(COUNT_COMPILED)+1))))
@@ -81,7 +89,8 @@ define show_completion
 	"$(BAR_WIDTH)" "$(shell printf '%*s' $(BAR_WIDTH) | tr ' ' '$(FILL_CHAR)')"
 endef
 
-%.o: %.c include/minishell.h Makefile
+$(OBJ_DIR)/%.o: %.c include/minishell.h Makefile
+	@mkdir -p $(dir $@)
 	$(print_progress)
 	@${CC} ${FLAGS} ${DEBUG_FLAG} -I$(LIBFT_DIR) -c $< -o $@  2>&1 || { printf "\n$(RED)Compilation failed!$(NC)\n"; exit 1; }
 
@@ -99,9 +108,8 @@ debug:			DEBUG_FLAG = -D DEBUG=1
 debug:			fclean all
 				@printf "$(YELLOW)Debug mode enabled (DEBUG=1)$(NC)\n"
 
-
 clean:
-				@$(RM) $(OBJS)
+				@$(RM) $(OBJ_DIR)
 				@make clean -C $(LIBFT_DIR) -s
 				@printf "$(RED)Object files deleted!$(NC)\n"
 
@@ -112,4 +120,4 @@ fclean:			clean
 
 re:				fclean all
 
-.PHONY:
+.PHONY: all clean fclean re debug
