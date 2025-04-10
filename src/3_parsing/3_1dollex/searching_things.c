@@ -30,6 +30,10 @@ char	*is_in_env_bis(char *var, t_env **env)
 		return (ft_strdup("$"));
 	if (var[0] == '?')
 		return ((**env).value);
+	if (strcmp("\'", var) == 0)
+		return (ft_strdup("$"));
+	if (strcmp("\"", var) == 0)
+		return (ft_strdup("$"));
 	ptr = *env;
 	while (ptr)
 	{
