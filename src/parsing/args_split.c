@@ -14,12 +14,12 @@
 
 static int	handle_redirections(char *cmd, int *current_pos, char current_quote)
 {
-	if (!current_quote && (cmd[*current_pos] == '<'
-		|| cmd[*current_pos] == '>') && cmd[*current_pos + 1] != '<'
+	if (!current_quote && (cmd[*current_pos] == '<' \
+		|| cmd[*current_pos] == '>') && cmd[*current_pos + 1] != '<' \
 	&& cmd[*current_pos + 1] != '>')
 	{
-			(*current_pos)++;
-			return (1);
+		(*current_pos)++;
+		return (1);
 	}
 	return (0);
 }
@@ -62,25 +62,9 @@ static int	process_arg(char *cmd, int *current_pos, char ***args,
 	while (*current_pos < (int)ft_strlen(cmd) && (current_quote
 			|| cmd[*current_pos] != ' '))
 	{
-		//FIX: quote 9-10-11-12
-		//OLD:handle_quotes(cmd[*current_pos], &current_quote);
-		if ((cmd[*current_pos] == '"' || cmd[*current_pos] == '\'')
-					&& !current_quote)
-			current_quote = cmd[*current_pos];
-		else if (cmd[*current_pos] == current_quote)
-			current_quote = 0;
-		//Fix end
-		//Fix redirection
+		handle_quotes(cmd[*current_pos], &current_quote);
 		if (handle_redirections(cmd, current_pos, current_quote))
 			break ;
-		/*if (!current_quote && (cmd[*current_pos] == '<'
-			|| cmd[*current_pos] == '>') && cmd[*current_pos + 1] != '<'
-		&& cmd[*current_pos + 1] != '>')
-		{
-			(*current_pos)++;
-			break ;
-		}*/
-		//FIX end
 		(*current_pos)++;
 	}
 	if (current_quote)
