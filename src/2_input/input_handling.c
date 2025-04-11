@@ -6,11 +6,12 @@
 /*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:06:47 by enormand          #+#    #+#             */
-/*   Updated: 2025/04/09 11:45:23 by enormand         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:29:15 by enormand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../include/env.h"
-#include "../../include/minishell.h"
+
+#include "env.h"
+#include "minishell.h"
 
 static char	*create_prompt(t_env **env, const char *result_str)
 {
