@@ -6,12 +6,31 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:23:10 by jsarter           #+#    #+#             */
-/*   Updated: 2025/04/09 11:37:52 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/04/11 18:50:01 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/env.h"
 #include "../../../include/minishell.h"
+
+char	*update_on_p_didy(char *strial)
+{
+	static char	*p_didy;
+
+	if (strial == NULL)
+		return (p_didy);
+	p_didy = strial;
+	return (NULL);
+}
+
+char	*get_p_didy(void)
+{
+	char	*p_didy;
+
+	kill(0, SIGUSR1);
+	p_didy = update_on_p_didy(NULL);
+	return (p_didy);
+}
 
 int	is_stop(char c)
 {
@@ -30,10 +49,10 @@ char	*is_in_env_bis(char *var, t_env **env)
 		return (ft_strdup("$"));
 	if (var[0] == '?')
 		return ((**env).value);
-	if (strcmp("\'", var) == 0)
+	if (ft_strcmp("\'", var) == 0 || ft_strcmp("\"", var) == 0)
 		return (ft_strdup("$"));
-	if (strcmp("\"", var) == 0)
-		return (ft_strdup("$"));
+	if (var[0] == '$')
+		return (get_p_didy());
 	ptr = *env;
 	while (ptr)
 	{
@@ -58,7 +77,7 @@ char	*search_dollex(char *str, int i, t_env **env)
 		len++;
 		i++;
 	}
-	if (len == 0 && str[i] == '?')
+	if (len == 0 && (str[i] == '?' || str[i] == '$'))
 	{
 		i++;
 		len++;

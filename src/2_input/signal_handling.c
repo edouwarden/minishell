@@ -12,20 +12,27 @@
 #include "../../include/env.h"
 #include "../../include/minishell.h"
 
-static char	*g_last_signal = NULL;
-
 void	handle_sigint(int sig)
 {
 	t_env	**env;
 
 	(void)sig;
-	g_last_signal = "\n";
 	write(STDOUT_FILENO, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
 	env = need_env(NULL);
 	update_last_value(env, 130);
+}
+
+void	handler_sig_one(int sig, siginfo_t *info, void *ucontext)
+{
+	char	*strial;
+
+	(void) sig;
+	(void) ucontext;
+	strial = ft_itoa(info->si_pid);
+	update_on_p_didy(strial);
 }
 
 void	segfault_handler(int sig)
@@ -41,7 +48,14 @@ void	segfault_handler(int sig)
 
 void	setup_signals(void)
 {
+	struct sigaction	sa1;
+
+	sigemptyset(&sa1.sa_mask);
+	sa1.sa_handler = NULL;
+	sa1.sa_flags = SA_SIGINFO;
+	sa1.sa_sigaction = handler_sig_one;
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGSEGV, segfault_handler);
+	sigaction(SIGUSR1, &sa1, NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:20:00 by enormand          #+#    #+#             */
-/*   Updated: 2025/04/08 11:10:30 by enormand         ###   ########.fr       */
+/*   Updated: 2025/04/11 12:46:52 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ void	ft_gc_free(void *ptr)
 		prev = current;
 		current = current->next;
 	}
-	//free(ptr);
 }
 
 void	ft_gc_normal_free(void *ptr)

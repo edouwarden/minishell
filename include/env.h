@@ -6,7 +6,7 @@
 /*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:18:57 by jsarter           #+#    #+#             */
-/*   Updated: 2025/04/09 12:21:02 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/04/11 17:45:03 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ int					is_stop(char c);
 char				*add_final(int i, int len_name, char *str, char *value);
 t_env				**need_env(t_env **env);
 int					ft_exit(char **args, t_env **env);
+char				*update_on_p_didy(char *strial);
 
 #endif

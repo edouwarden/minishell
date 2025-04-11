@@ -34,7 +34,7 @@ long long	get_exit_status(char **args, t_env **env)
 
 	status = 0;
 	if (!args || !args[1])
-		return (atoi((*env)->value));
+		return (ft_atoi((*env)->value));
 	if (args[2] && *args[2])
 	{
 		print_too_many_args_error();

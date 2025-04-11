@@ -6,14 +6,14 @@
 /*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:06:47 by enormand          #+#    #+#             */
-/*   Updated: 2025/04/09 11:45:23 by enormand         ###   ########.fr       */
+/*   Updated: 2025/04/11 18:43:18 by jsarter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef INPUT_H
 # define INPUT_H
 
 char	*read_command_line(t_env **env);
-void	handle_eof(char *line);
+void	handle_eof(char *line, t_env **env);
 
 void	handle_sigint(int sig);
 void	segfault_handler(int sig);

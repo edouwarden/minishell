@@ -68,12 +68,15 @@ char	*read_command_line(t_env **env)
 	return (line);
 }
 
-void	handle_eof(char *line)
+void	handle_eof(char *line, t_env **env)
 {
+	int	exit_code;
+
 	if (!line)
 	{
+		exit_code = ft_atoi((*env)->value);
 		printf("exit\n");
 		ft_gc_cleanup();
-		exit(0);
+		exit(exit_code);
 	}
 }

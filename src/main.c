@@ -24,7 +24,7 @@ int	main(void)
 	while (1)
 	{
 		cmd_line = read_command_line(env);
-		handle_eof(cmd_line);
+		handle_eof(cmd_line, env);
 		cmd_line = dollex(cmd_line, env);
 		if (cmd_line && *cmd_line)
 		{
