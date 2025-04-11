@@ -6,11 +6,11 @@
 /*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:07:21 by enormand          #+#    #+#             */
-/*   Updated: 2025/04/08 14:18:29 by enormand         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:36:59 by enormand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/minishell.h"
+#include "minishell.h"
 
 static t_pipeline	*init_pipeline(int cmd_count)
 {

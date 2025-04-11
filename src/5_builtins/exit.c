@@ -6,11 +6,11 @@
 /*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:07:56 by jsarter           #+#    #+#             */
-/*   Updated: 2025/04/09 12:47:40 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/04/11 16:36:59 by enormand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
 int	ft_isnum(char *str)
 {

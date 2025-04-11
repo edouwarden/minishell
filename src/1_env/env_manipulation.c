@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   env_manipulation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 15:00:33 by jsarter           #+#    #+#             */
-/*   Updated: 2025/04/09 12:01:01 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/04/11 16:36:59 by enormand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/env.h"
-#include "../../include/minishell.h"
+#include "env.h"
+#include "minishell.h"
 
 t_env	**need_env(t_env **env)
 {

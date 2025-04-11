@@ -6,11 +6,11 @@
 /*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 12:46:28 by enormand          #+#    #+#             */
-/*   Updated: 2025/04/09 14:17:08 by enormand         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:36:59 by enormand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/minishell.h"
+#include "minishell.h"
 
 static int	handle_redirection_symbols(char *cmd, int *current_pos,
 		char current_quote)

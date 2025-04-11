@@ -6,12 +6,12 @@
 /*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:06:40 by enormand          #+#    #+#             */
-/*   Updated: 2025/04/08 11:26:39 by enormand         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:36:46 by enormand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/env.h"
-#include "../include/minishell.h"
+#include "env.h"
+#include "minishell.h"
 
 int	main(void)
 {

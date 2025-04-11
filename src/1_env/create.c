@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   create.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 15:00:33 by jsarter           #+#    #+#             */
-/*   Updated: 2025/04/09 12:06:54 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/04/11 16:36:34 by enormand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/env.h"
-#include "../../include/minishell.h"
+#include "env.h"
+#include "minishell.h"
 
 t_env	**env_clear(t_env **lst)
 {

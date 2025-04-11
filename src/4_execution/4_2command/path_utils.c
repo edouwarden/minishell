@@ -6,11 +6,11 @@
 /*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:07:12 by enormand          #+#    #+#             */
-/*   Updated: 2025/04/08 12:34:01 by enormand         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:36:59 by enormand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/minishell.h"
+#include "minishell.h"
 
 char	*join_path(char *path, char *cmd)
 {

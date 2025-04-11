@@ -6,11 +6,11 @@
 /*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:06:47 by enormand          #+#    #+#             */
-/*   Updated: 2025/04/09 11:45:23 by enormand         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:36:59 by enormand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../include/env.h"
-#include "../../include/minishell.h"
+
+#include "minishell.h"
 
 void	handle_sigint(int sig)
 {

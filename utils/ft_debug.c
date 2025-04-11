@@ -6,11 +6,11 @@
 /*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 10:59:18 by enormand          #+#    #+#             */
-/*   Updated: 2025/04/08 11:16:25 by enormand         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:36:59 by enormand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 void	debug_str_list(char **str)
 {

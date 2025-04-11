@@ -6,11 +6,11 @@
 /*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:38:03 by enormand          #+#    #+#             */
-/*   Updated: 2025/04/09 12:42:34 by enormand         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:36:59 by enormand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../../include/minishell.h"
+#include "minishell.h"
 
 int	handle_output_redirection(t_command *cmd)
 {

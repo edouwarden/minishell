@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 12:22:51 by jsarter           #+#    #+#             */
-/*   Updated: 2025/04/09 11:12:56 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/04/11 16:36:59 by enormand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/env.h"
-#include "../../include/minishell.h"
+#include "env.h"
+#include "minishell.h"
 
 int	is_egal(char *str)
 {

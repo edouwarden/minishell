@@ -6,11 +6,11 @@
 /*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:07:02 by enormand          #+#    #+#             */
-/*   Updated: 2025/04/09 10:29:38 by enormand         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:36:59 by enormand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/minishell.h"
+#include "minishell.h"
 
 static int	handle_input_redirection_token(t_command *cmd, char *next_arg)
 {

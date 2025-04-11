@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsarter <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:43:21 by jsarter           #+#    #+#             */
-/*   Updated: 2025/03/31 16:35:29 by jsarter          ###   ########.fr       */
+/*   Updated: 2025/04/11 16:36:59 by enormand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/env.h"
-#include "../../include/minishell.h"
+#include "env.h"
+#include "minishell.h"
 
 int	is_und_n(char *str)
 {

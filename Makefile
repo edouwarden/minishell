@@ -1,6 +1,6 @@
 NAME		=	minishell
 CC			=	cc
-FLAGS		=	-Wall -Wextra -Werror -g3
+FLAGS		=	-Wall -Wextra -Werror -g3 -I ./include
 
 DEBUG_FLAG	=
 
@@ -43,7 +43,7 @@ SRCS		=	src/main.c \
 				src/errors/parsing_errors.c \
 				utils/ft_debug.c \
 				utils/ft_lstlast.c \
-				utils/utils.c 
+				utils/utils.c
 
 OBJ_DIR		=	obj
 OBJS		=	$(SRCS:%.c=$(OBJ_DIR)/%.o)

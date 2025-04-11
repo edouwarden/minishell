@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command_execution.c                                :+:      :+:    :+:   */
+/*   builtin_execution.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:07:28 by enormand          #+#    #+#             */
-/*   Updated: 2025/04/08 11:07:29 by enormand         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:36:59 by enormand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/env.h"
-#include "../../include/minishell.h"
+#include "env.h"
+#include "minishell.h"
 
 int	is_builtin(char *cmd)
 {
