@@ -38,7 +38,7 @@ void	del_one_env(t_env *ptr)
 	ft_gc_free(ptr);
 }
 
-void	out_of_env(t_env **env, char *name)
+void	remove_env_variable(t_env **env, char *name)
 {
 	t_env	*ptr;
 	t_env	*ptr_prev;
@@ -64,12 +64,12 @@ void	out_of_env(t_env **env, char *name)
 	}
 }
 
-int	ft_unset(char **v, t_env **env)
+int	builtin_unset(char **v, t_env **env)
 {
 	int	c;
 	int	i;
 
-	c = get_c(v);
+	c = count_strings(v);
 	if (c == 0)
 		return (0);
 	i = 1;
@@ -78,7 +78,7 @@ int	ft_unset(char **v, t_env **env)
 		if (v[i])
 		{
 			if (ft_strcmp("_", v[i]) != 0 || ft_strcmp("?", v[i]) != 0)
-				out_of_env(env, v[i]);
+				remove_env_variable(env, v[i]);
 		}
 		i++;
 	}

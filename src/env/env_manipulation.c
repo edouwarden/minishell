@@ -13,7 +13,7 @@
 #include "env.h"
 #include "minishell.h"
 
-t_env	**need_env(t_env **env)
+t_env	**env_backup(t_env **env)
 {
 	static t_env	**backup;
 

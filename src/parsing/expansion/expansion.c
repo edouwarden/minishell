@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dollex.c                                           :+:      :+:    :+:   */
+/*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -13,7 +13,7 @@
 #include "env.h"
 #include "minishell.h"
 
-char	*add_final(int i, int len_name, char *str, char *value)
+char	*replace_variable(int i, int len_name, char *str, char *value)
 {
 	int		len_str;
 	int		len_value;
@@ -42,7 +42,7 @@ char	*add_final(int i, int len_name, char *str, char *value)
 	return (resu);
 }
 
-void	quote_management(char c, char *str, int *i, int *quote)
+void	handle_quote(char c, char *str, int *i, int *quote)
 {
 	if (c == '\'' && *quote == 0)
 	{
@@ -54,23 +54,23 @@ void	quote_management(char c, char *str, int *i, int *quote)
 		*quote = (*quote + 1) % 2;
 }
 
-char	*dollex(char *str, t_env **env)
+char	*expand_variables(char *str, t_env **env)
 {
 	int		i;
 	int		quote;
-	char	*with_dollex;
+	char	*expanded;
 
 	i = 0;
 	quote = 0;
-	with_dollex = ft_strdup(str);
-	while (with_dollex[i])
+	expanded = ft_strdup(str);
+	while (expanded[i])
 	{
-		if (with_dollex[i] == '\'' || with_dollex[i] == '"')
-			quote_management(with_dollex[i], with_dollex, &i, &quote);
-		else if (with_dollex[i] == '$')
-			with_dollex = search_dollex(with_dollex, i + 1, env);
+		if (expanded[i] == '\'' || expanded[i] == '"')
+			handle_quote(expanded[i], expanded, &i, &quote);
+		else if (expanded[i] == '$')
+			expanded = expand_variable(expanded, i + 1, env);
 		i++;
 	}
 	ft_gc_free(str);
-	return (with_dollex);
+	return (expanded);
 }

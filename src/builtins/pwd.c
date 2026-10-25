@@ -13,7 +13,7 @@
 #include "env.h"
 #include "minishell.h"
 
-int	pwd(void)
+int	builtin_pwd(void)
 {
 	char	*ptr;
 	char	*cwd;

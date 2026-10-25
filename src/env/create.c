@@ -57,7 +57,7 @@ void	handle_shell_level(t_env **env)
 	lvl->value = ft_itoa(tmp);
 }
 
-t_env	**remember_no_env(t_env **env)
+t_env	**init_fallback_env(t_env **env)
 {
 	t_env	*tmp;
 	char	*ptr;
@@ -66,25 +66,25 @@ t_env	**remember_no_env(t_env **env)
 	ptr[0] = 'P';
 	ptr[1] = 'W';
 	ptr[2] = 'D';
-	add_to_bis(env, ptr, getcwd(NULL, 0));
+	add_env_pair(env, ptr, getcwd(NULL, 0));
 	tmp = new_env(ft_strdup("LAST_RESULT"), ft_strdup("0"));
 	add_front_env(tmp, env);
 	handle_shell_level(env);
 	ptr = getcwd(NULL, 0);
-	add_to_bis(env, ft_strdup("_"), ft_strjoin(ptr, "/./minishell"));
+	add_env_pair(env, ft_strdup("_"), ft_strjoin(ptr, "/./minishell"));
 	ft_gc_normal_free(ptr);
-	need_env(env);
+	env_backup(env);
 	return (env);
 }
 
-void	some_more_changes(t_env **env)
+void	init_default_env(t_env **env)
 {
 	t_env	*tmp;
 
 	tmp = new_env(ft_strdup("LAST_RESULT"), ft_strdup("0"));
 	add_front_env(tmp, env);
 	handle_shell_level(env);
-	need_env(env);
+	env_backup(env);
 }
 
 t_env	**create_env(void)
@@ -99,18 +99,18 @@ t_env	**create_env(void)
 		return (NULL);
 	envp = __environ;
 	if (!envp[0])
-		return (remember_no_env(list));
-	tmp = new_env(get_n(envp[0]), get_v(envp[0]));
+		return (init_fallback_env(list));
+	tmp = new_env(get_env_name(envp[0]), get_env_value(envp[0]));
 	add_back_env(tmp, list);
 	i = 1;
 	while (envp[i])
 	{
-		tmp = new_env(get_n(envp[i]), get_v(envp[i]));
+		tmp = new_env(get_env_name(envp[i]), get_env_value(envp[i]));
 		if (!tmp)
 			return (env_clear(list));
 		add_back_env(tmp, list);
 		i++;
 	}
-	some_more_changes(list);
+	init_default_env(list);
 	return (list);
 }

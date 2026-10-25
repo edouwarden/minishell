@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_garbage.c                                       :+:      :+:    :+:   */
+/*   ft_gc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,41 +12,41 @@
 
 #include "libft.h"
 
-t_garbage	**get_garbage(void)
+static t_gc_node	**get_gc_list(void)
 {
-	static t_garbage	*garbage_list = NULL;
+	static t_gc_node	*gc_list = NULL;
 
-	return (&garbage_list);
+	return (&gc_list);
 }
 
 void	*ft_gc_malloc(size_t size)
 {
 	void		*ptr;
-	t_garbage	*new;
+	t_gc_node	*new;
 
 	ptr = malloc(size);
 	if (!ptr)
 		return (NULL);
-	new = malloc(sizeof(t_garbage));
+	new = malloc(sizeof(t_gc_node));
 	if (!new)
 	{
 		free(ptr);
 		return (NULL);
 	}
 	new->ptr = ptr;
-	new->next = *get_garbage();
-	*get_garbage() = new;
+	new->next = *get_gc_list();
+	*get_gc_list() = new;
 	return (ptr);
 }
 
 void	ft_gc_free(void *ptr)
 {
-	t_garbage	*current;
-	t_garbage	*prev;
+	t_gc_node	*current;
+	t_gc_node	*prev;
 
 	if (!ptr)
 		return ;
-	current = *get_garbage();
+	current = *get_gc_list();
 	prev = NULL;
 	while (current)
 	{
@@ -55,7 +55,7 @@ void	ft_gc_free(void *ptr)
 			if (prev)
 				prev->next = current->next;
 			else
-				*get_garbage() = current->next;
+				*get_gc_list() = current->next;
 			free(ptr);
 			free(current);
 			return ;
@@ -73,10 +73,10 @@ void	ft_gc_normal_free(void *ptr)
 
 void	ft_gc_cleanup(void)
 {
-	t_garbage	*current;
-	t_garbage	*next;
+	t_gc_node	*current;
+	t_gc_node	*next;
 
-	current = *get_garbage();
+	current = *get_gc_list();
 	while (current)
 	{
 		next = current->next;
@@ -84,5 +84,5 @@ void	ft_gc_cleanup(void)
 		free(current);
 		current = next;
 	}
-	*get_garbage() = NULL;
+	*get_gc_list() = NULL;
 }

@@ -1,6 +1,6 @@
-{     
-	<ignore_basic_cmd_leaks>     
-	Memcheck:Leak     
-	...     
-	obj:/usr/bin/* 
+{
+   basic_command_leaks
+   Memcheck:Leak
+   ...
+   obj:/usr/bin/*
 }

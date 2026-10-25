@@ -34,7 +34,7 @@ static char	*create_prompt(t_env **env, const char *result_str)
 		home_display = ft_strdup("minishell");
 	if (home_display)
 	{
-		prompt = concat((const char *[]){"\033[0;31m", result_str, \
+		prompt = join_strings((const char *[]){"\033[0;31m", result_str, \
 "\e[1;32mMinishell\e[2;36m ", home_display, "\e[0m\e[1;32m>\e[0m "}, 5);
 		ft_gc_free(home_display);
 		return (prompt);

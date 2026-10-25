@@ -19,7 +19,7 @@ void	handle_sigint(int sig);
 void	segfault_handler(int sig);
 void	setup_signals(void);
 
-char	*concat(const char **strs, int count);
+char	*join_strings(const char **strs, int count);
 char	*get_relative_path(const char *path, const char *home);
 
 #endif

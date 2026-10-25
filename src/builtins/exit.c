@@ -56,7 +56,7 @@ long long	get_exit_status(char **args, t_env **env)
 	return (status);
 }
 
-int	ft_exit(char **args, t_env **env)
+int	builtin_exit(char **args, t_env **env)
 {
 	int	exit_code;
 

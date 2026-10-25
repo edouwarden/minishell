@@ -13,7 +13,7 @@
 #include "env.h"
 #include "minishell.h"
 
-int	is_und_n(char *str)
+int	is_n_flag(char *str)
 {
 	int	i;
 
@@ -29,7 +29,7 @@ int	is_und_n(char *str)
 	return (1);
 }
 
-int	echo(char **arg)
+int	builtin_echo(char **arg)
 {
 	int		i;
 	int		old_i;
@@ -38,10 +38,10 @@ int	echo(char **arg)
 
 	i = 1;
 	n = 0;
-	c = get_c(arg);
+	c = count_strings(arg);
 	if (!arg || c == 1)
 		return (0);
-	while (is_und_n(arg[i]) && (i < c - 1))
+	while (is_n_flag(arg[i]) && (i < c - 1))
 		i++;
 	if (i == 1)
 		n = '\n';
@@ -51,7 +51,7 @@ int	echo(char **arg)
 		printf("%s ", arg[i]);
 		i++;
 	}
-	if ((old_i == i && !arg[i]) || (old_i == i && is_und_n(arg[i])))
+	if ((old_i == i && !arg[i]) || (old_i == i && is_n_flag(arg[i])))
 		return (0);
 	printf("%s", arg[i]);
 	printf("%c", n);

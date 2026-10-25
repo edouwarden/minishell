@@ -25,7 +25,7 @@ int	main(void)
 	{
 		cmd_line = read_command_line(env);
 		handle_eof(cmd_line, env);
-		cmd_line = dollex(cmd_line, env);
+		cmd_line = expand_variables(cmd_line, env);
 		if (cmd_line && *cmd_line)
 		{
 			pipeline = split_command(cmd_line);

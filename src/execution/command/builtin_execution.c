@@ -29,18 +29,18 @@ void	execute_builtin(char **args, t_env **env)
 		return ;
 	value = -1;
 	if (!ft_strcmp(args[0], CMD_ECHO))
-		value = echo(args);
+		value = builtin_echo(args);
 	else if (!ft_strcmp(args[0], CMD_CD))
-		value = cd(args, env);
+		value = builtin_cd(args, env);
 	else if (!ft_strcmp(args[0], CMD_PWD))
-		value = pwd();
+		value = builtin_pwd();
 	else if (!ft_strcmp(args[0], CMD_EXPORT))
-		value = ft_export(args, env);
+		value = builtin_export(args, env);
 	else if (!ft_strcmp(args[0], CMD_UNSET))
-		value = ft_unset(args, env);
+		value = builtin_unset(args, env);
 	else if (!ft_strcmp(args[0], CMD_ENV))
-		value = print_env(args, env);
+		value = builtin_env(args, env);
 	else if (!ft_strcmp(args[0], CMD_EXIT))
-		value = ft_exit(args, env);
-	update_last_value(env, value);
+		value = builtin_exit(args, env);
+	set_last_result(env, value);
 }

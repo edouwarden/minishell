@@ -23,11 +23,11 @@ typedef struct s_list
 	struct s_list		*next;
 }						t_list;
 
-typedef struct s_garbage
+typedef struct s_gc_node
 {
 	void				*ptr;
-	struct s_garbage	*next;
-}						t_garbage;
+	struct s_gc_node	*next;
+}						t_gc_node;
 
 void					*ft_gc_malloc(size_t size);
 void					ft_gc_free(void *ptr);

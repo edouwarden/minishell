@@ -29,10 +29,10 @@ void	wait_for_children(pid_t *child_pids, int cmd_count, t_env **env)
 				last_command_status = WEXITSTATUS(status);
 			else if (WIFSIGNALED(status))
 				last_command_status = 128 + WTERMSIG(status);
-			update_last_value(env, last_command_status);
+			set_last_result(env, last_command_status);
 		}
 		cmd_index--;
 	}
 	ft_gc_free(child_pids);
-	update_last_value(env, last_command_status);
+	set_last_result(env, last_command_status);
 }

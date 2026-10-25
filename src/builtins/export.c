@@ -13,7 +13,7 @@
 #include "env.h"
 #include "minishell.h"
 
-int	is_egal(char *str)
+int	find_equal_sign(char *str)
 {
 	int	i;
 	int	first_equal;
@@ -40,17 +40,17 @@ int	is_egal(char *str)
 	return (0);
 }
 
-void	add_to(t_env **env, char *var)
+void	add_env_entry(t_env **env, char *var)
 {
 	t_env	*tmp;
 
-	tmp = new_env(get_n(var), get_v(var));
+	tmp = new_env(get_env_name(var), get_env_value(var));
 	if (!tmp)
 		return ;
 	add_back_env(tmp, env);
 }
 
-int	get_c(char **v)
+int	count_strings(char **v)
 {
 	int	i;
 
@@ -67,36 +67,36 @@ int	check_args(char **v, int c)
 	i = 1;
 	while (i < c)
 	{
-		if (is_egal(v[i]) == -1)
+		if (find_equal_sign(v[i]) == -1)
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
-int	ft_export(char **v, t_env **env)
+int	builtin_export(char **v, t_env **env)
 {
 	int		c;
 	int		i;
 	t_env	*element;
 
-	c = get_c(v);
+	c = count_strings(v);
 	if (c == 1)
-		print_env(v, env);
+		builtin_env(v, env);
 	if (check_args(v, c))
 		return (1);
 	i = 1;
 	while (i < c)
 	{
-		element = is_in_env(env, get_n(v[i]));
+		element = is_in_env(env, get_env_name(v[i]));
 		if (element)
 		{
 			if (element->value)
 				ft_gc_free(element->value);
-			element->value = get_v(v[i]);
+			element->value = get_env_value(v[i]);
 		}
 		else
-			add_to(env, v[i]);
+			add_env_entry(env, v[i]);
 		i++;
 	}
 	return (0);

@@ -7,41 +7,41 @@ DEBUG_FLAG	=
 RM			=	rm -rf
 
 SRCS		=	src/main.c \
-				src/1_env/create.c \
-				src/1_env/env_manipulation.c \
-				src/2_input/input_handling.c \
-				src/2_input/signal_handling.c \
-				src/2_input/string_utils.c \
-				src/3_parsing/3_1dollex/dollex.c \
-				src/3_parsing/3_1dollex/searching_things.c \
-				src/3_parsing/3_2split_command/command_split.c \
-				src/3_parsing/3_2split_command/redirection.c \
-				src/3_parsing/3_2split_command/redirection_tokens.c \
-				src/3_parsing/3_2split_command/redirection_utils.c \
-				src/3_parsing/3_3split_args/args_split.c \
-				src/3_parsing/commands_utils.c \
-				src/4_execution/4_1pipeline/pipeline_process.c \
-				src/4_execution/4_1pipeline/pipeline_setup.c \
-				src/4_execution/4_2command/builtin_execution.c \
-				src/4_execution/4_2command/command_execution.c \
-				src/4_execution/4_2command/command_redirections.c \
-				src/4_execution/4_2command/convert_env_to_array.c \
-				src/4_execution/4_2command/path_utils.c \
-				src/4_execution/4_2command/redirections/heredoc.c \
-				src/4_execution/4_2command/redirections/input.c \
-				src/4_execution/4_2command/redirections/output.c \
-				src/5_builtins/cd.c \
-				src/5_builtins/echo.c \
-				src/5_builtins/env.c \
-				src/5_builtins/export.c \
-				src/5_builtins/exit.c \
-				src/5_builtins/pwd.c \
-				src/5_builtins/unset.c \
+				src/env/create.c \
+				src/env/env_manipulation.c \
+				src/input/input_handling.c \
+				src/input/signal_handling.c \
+				src/input/string_utils.c \
+				src/parsing/expansion/expansion.c \
+				src/parsing/expansion/env_expansion.c \
+				src/parsing/command_split/command_split.c \
+				src/parsing/command_split/redirection.c \
+				src/parsing/command_split/redirection_tokens.c \
+				src/parsing/command_split/redirection_utils.c \
+				src/parsing/args_split/args_split.c \
+				src/parsing/commands_utils.c \
+				src/execution/pipeline/pipeline_process.c \
+				src/execution/pipeline/pipeline_setup.c \
+				src/execution/command/builtin_execution.c \
+				src/execution/command/command_execution.c \
+				src/execution/command/command_redirections.c \
+				src/execution/command/convert_env_to_array.c \
+				src/execution/command/path_utils.c \
+				src/execution/command/redirections/heredoc.c \
+				src/execution/command/redirections/input.c \
+				src/execution/command/redirections/output.c \
+				src/builtins/cd.c \
+				src/builtins/echo.c \
+				src/builtins/env.c \
+				src/builtins/export.c \
+				src/builtins/exit.c \
+				src/builtins/pwd.c \
+				src/builtins/unset.c \
 				src/errors/error_handler.c \
 				src/errors/commands_errors.c \
 				src/errors/major_errors.c \
 				src/errors/parsing_errors.c \
-				utils/ft_debug.c \
+				utils/debug.c \
 				utils/ft_lstlast.c \
 				utils/utils.c
 

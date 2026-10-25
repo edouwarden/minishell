@@ -13,7 +13,7 @@
 #include "env.h"
 #include "minishell.h"
 
-void	update_last_value(t_env **env, long int value)
+void	set_last_result(t_env **env, long int value)
 {
 	char	*str_value;
 
@@ -22,12 +22,12 @@ void	update_last_value(t_env **env, long int value)
 	(*env)->value = str_value;
 }
 
-int	print_env(char **argv, t_env **lst)
+int	builtin_env(char **argv, t_env **lst)
 {
 	t_env	*ptr;
 	int		c;
 
-	c = get_c(argv);
+	c = count_strings(argv);
 	if (c != 1)
 	{
 		printf("env: ‘%s’: No such file or directory\n", argv[1]);

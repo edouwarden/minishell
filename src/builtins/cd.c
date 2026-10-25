@@ -13,7 +13,7 @@
 #include "env.h"
 #include "minishell.h"
 
-void	add_to_bis(t_env **env, char *n, char *v)
+void	add_env_pair(t_env **env, char *n, char *v)
 {
 	t_env	*tmp;
 
@@ -34,7 +34,7 @@ void	set_to_old_pwd(t_env **env, t_env *pwd, int old)
 		if (!ptr)
 			return ;
 		ft_strlcpy(ptr, "OLDPWD", 6);
-		add_to_bis(env, ptr, ft_strdup(pwd->value));
+		add_env_pair(env, ptr, ft_strdup(pwd->value));
 		cwd = getcwd(NULL, 0);
 		pwd->value = ft_strdup(cwd);
 		ft_gc_normal_free(cwd);
@@ -46,7 +46,7 @@ void	set_to_old_pwd(t_env **env, t_env *pwd, int old)
 			return ;
 		ft_strlcpy(ptr, "PWD", 3);
 		cwd = getcwd(NULL, 0);
-		add_to_bis(env, ptr, ft_strdup(cwd));
+		add_env_pair(env, ptr, ft_strdup(cwd));
 		ft_gc_normal_free(cwd);
 	}
 	return ;
@@ -72,7 +72,7 @@ void	update_env(t_env **env, t_env *old_pwd, t_env *pwd)
 		return (set_to_old_pwd(env, NULL, 0));
 }
 
-int	go_to_path(char *path, t_env **env)
+int	change_to_path(char *path, t_env **env)
 {
 	int		error;
 	t_env	*ptr;
@@ -92,12 +92,12 @@ int	go_to_path(char *path, t_env **env)
 	return (0);
 }
 
-int	cd(char **path, t_env **env)
+int	builtin_cd(char **path, t_env **env)
 {
 	int		error;
 	t_env	*ptr;
 
-	error = get_c(path);
+	error = count_strings(path);
 	if (error > 2)
 	{
 		write(2, "cd: too many arguments\n", 23);
@@ -107,11 +107,11 @@ int	cd(char **path, t_env **env)
 	{
 		ptr = is_in_env(env, ft_strdup("HOME"));
 		if (ptr)
-			error = go_to_path(ptr->value, env);
+			error = change_to_path(ptr->value, env);
 		else
 			printf("cd: HOME not set\n");
 	}
 	else
-		error = go_to_path(path[1], env);
+		error = change_to_path(path[1], env);
 	return (error);
 }

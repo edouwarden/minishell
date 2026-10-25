@@ -90,7 +90,7 @@ static void	create_child_processes(t_pipeline *pipeline, pid_t *child_pids)
 		{
 			perror("fork: Erreur lors de la création du processus");
 			ft_gc_free(child_pids);
-			update_last_value(pipeline->env, 1);
+			set_last_result(pipeline->env, 1);
 			return ;
 		}
 		if (child_pids[cmd_index] == 0)
@@ -113,7 +113,7 @@ void	execute_pipeline(t_pipeline *pipeline)
 
 	if (!pipeline || !pipeline->commands || !pipeline->commands[0])
 	{
-		update_last_value(pipeline->env, 1);
+		set_last_result(pipeline->env, 1);
 		return ;
 	}
 	if (pipeline->cmd_count == 1 && pipeline->commands[0]

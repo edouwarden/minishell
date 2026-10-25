@@ -1,17 +1,17 @@
 {
-   ignore_all_readline_leaks
+   readline_path_leaks
    Memcheck:Leak
    ...
    obj:/usr/lib/x86_64-linux-gnu/libreadline.so.*
 }
 {
-   i_love_readline
+   readline_lib_leaks
    Memcheck:Leak
    ...
    obj:*/lib*/libreadline.so*
 }
 {
-   ignore_all_ls_leaks
+   coreutils_path_leaks
    Memcheck:Leak
    ...
    obj:/bin

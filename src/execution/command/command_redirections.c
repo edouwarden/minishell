@@ -123,7 +123,7 @@ void	handle_builtin_single_command(t_pipeline *pipeline)
 		|| handle_output_redirection(pipeline->commands[0]) == -1)
 	{
 		cleanup_redirections(pipeline->commands[0]);
-		update_last_value(pipeline->env, 1);
+		set_last_result(pipeline->env, 1);
 		return ;
 	}
 	saved_stdin = dup(STDIN);

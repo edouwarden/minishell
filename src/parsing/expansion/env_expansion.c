@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   searching_things.c                                 :+:      :+:    :+:   */
+/*   env_expansion.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: enormand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -13,33 +13,33 @@
 #include "env.h"
 #include "minishell.h"
 
-char	*update_on_p_didy(char *strial)
+char	*set_shell_pid(char *pid_str)
 {
 	static char	*p_didy;
 
-	if (strial == NULL)
+	if (pid_str == NULL)
 		return (p_didy);
-	p_didy = strial;
+	p_didy = pid_str;
 	return (NULL);
 }
 
-char	*get_p_didy(void)
+char	*get_shell_pid(void)
 {
 	char	*p_didy;
 
 	kill(0, SIGUSR1);
-	p_didy = update_on_p_didy(NULL);
+	p_didy = set_shell_pid(NULL);
 	return (p_didy);
 }
 
-int	is_stop(char c)
+int	is_var_char(char c)
 {
 	if (ft_isalnum(c) || c == '_')
 		return (1);
 	return (0);
 }
 
-char	*is_in_env_bis(char *var, t_env **env)
+char	*find_env_value(char *var, t_env **env)
 {
 	char	*final;
 	t_env	*ptr;
@@ -52,7 +52,7 @@ char	*is_in_env_bis(char *var, t_env **env)
 	if (ft_strcmp("\'", var) == 0 || ft_strcmp("\"", var) == 0)
 		return (ft_strdup("$"));
 	if (var[0] == '$')
-		return (get_p_didy());
+		return (get_shell_pid());
 	ptr = *env;
 	while (ptr)
 	{
@@ -64,15 +64,15 @@ char	*is_in_env_bis(char *var, t_env **env)
 	return (final);
 }
 
-char	*search_dollex(char *str, int i, t_env **env)
+char	*expand_variable(char *str, int i, t_env **env)
 {
 	int		len;
 	char	*var;
 	char	*final;
-	char	*dollex;
+	char	*expanded;
 
 	len = 0;
-	while (is_stop(str[i]))
+	while (is_var_char(str[i]))
 	{
 		len++;
 		i++;
@@ -84,7 +84,7 @@ char	*search_dollex(char *str, int i, t_env **env)
 	}
 	var = ft_calloc(len + 1, sizeof(char));
 	ft_strncpy(str + i - len, var, len);
-	final = is_in_env_bis(var, env);
-	dollex = add_final(i, len, str, final);
-	return (dollex);
+	final = find_env_value(var, env);
+	expanded = replace_variable(i, len, str, final);
+	return (expanded);
 }

@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-char	*concat(const char **strs, int count)
+char	*join_strings(const char **strs, int count)
 {
 	char	*result;
 	char	*temp;

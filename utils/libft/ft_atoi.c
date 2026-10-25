@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_contain_any(char *str, char c)
+static int	ft_str_has_char(char *str, char c)
 {
 	int	i;
 
@@ -33,7 +33,7 @@ long long	ft_atoi(char *str)
 	i = 0;
 	res = 0;
 	minus = 0;
-	while (ft_contain_any(" \t\v\r\f\n", str[i]))
+	while (ft_str_has_char(" \t\v\r\f\n", str[i]))
 		i++;
 	if (str[i] == '-' || str[i] == '+')
 	{

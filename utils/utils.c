@@ -25,7 +25,7 @@ void	ft_strncpy(char *src, char *dest, int n)
 	}
 }
 
-char	*get_n(char *env)
+char	*get_env_name(char *env)
 {
 	int		i;
 	char	*tmp;
@@ -40,7 +40,7 @@ char	*get_n(char *env)
 	return (tmp);
 }
 
-char	*get_v(char *env)
+char	*get_env_value(char *env)
 {
 	int		i;
 	int		len;
